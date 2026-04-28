@@ -1,0 +1,146 @@
+.headerContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+
+}
+
+.headerContainer {
+    background-image: url('../../assets/images/header/logistics-company-in-Mexico.png');
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    max-width: 100%;
+    position: relative;
+}
+
+.navb {
+    position: relative;
+    z-index: 2;
+}
+
+.headerBodyTextContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-top: 100px;
+    padding: 0px 120px;
+    position: relative;
+    z-index: 1;
+    /* border: .1px solid #bd1d1d; */
+}
+
+.headerBodyText {
+    width: 60%;
+    padding: 10px;
+    font-size: 3rem
+}
+
+.trackShipmentContainer {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+
+}
+
+.trackShipmentForm {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 2px;
+    padding: 10px;
+}
+
+.trackShipmentContainer input {
+    width: 80%;
+    height: 60px;
+    border-radius: 5px 0px 0px 5px;
+    padding: 0px 10px;
+    border: none;
+}
+
+.trackShipmentContainer button {
+    width: 20%;
+    height: 60px;
+    background-color: #ef476f;
+    border: none;
+    border-radius: 0px 5px 5px 0px;
+    color: #ffff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    text-wrap: wrap;
+}
+
+.headerBodyText h1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 62px;
+    line-height: 64px;
+    letter-spacing: -0.25px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffff;
+}
+
+.headerBodyText p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    color: #ffff;
+}
+
+.headerBodyText button {
+    width: 150px;
+    height: 50px;
+    background-color: #ef476f;
+    border: none;
+    border-radius: 8px;
+    color: #ffff;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .headerBodyTextContainer {
+        padding: 0px 20px;
+        flex-direction: column;
+        margin-top: 50px;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .headerBodyText,
+    .trackShipmentContainer {
+        width: 100%;
+    }
+
+    .headerBodyText h1 {
+        font-size: 2.3rem;
+        line-height: 44px;
+    }
+
+    .trackShipmentForm {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .trackShipmentContainer input,
+    .trackShipmentContainer button {
+        width: 100%;
+        border-radius: 5px;
+    }
+}

@@ -1,0 +1,143 @@
+.whyChooseUsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px 120px;
+
+}
+
+.whyChooseUs h1 {
+    font-size: 36px;
+    letter-spacing: -0.25px;
+    line-height: 42px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    justify-content: center;
+    text-wrap: wrap;
+
+}
+
+.whyChooseUsItems {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    /* border:.2px solid #ef476f; */
+    padding: 10px 60px;
+}
+
+.whyChooseUs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.whyChooseUs h4 {
+    font-size: 20px;
+    letter-spacing: -0.25px;
+    line-height: 28px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    justify-content: center;
+    text-wrap: wrap;
+
+}
+
+.whyChooseUs p {
+    font-size: 16px;
+    letter-spacing: 0.15px;
+    line-height: 20px;
+    font-weight: 300;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    justify-content: center;
+    text-wrap: wrap;
+}
+
+.whyChooseUsIcon1,
+.whyChooseUsIcon2,
+.whyChooseUsIcon3,
+.whyChooseUsIcon4 {
+    width: 80px;
+    height: 80px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+
+}
+
+.whyChooseUsIcon1 {
+    background-color: rgba(239, 71, 111, 0.1);
+
+    #icon {
+        width: 28px;
+        height: 28px;
+        color: #ef476f;
+
+    }
+
+}
+
+.whyChooseUsIcon2 {
+    background-color: rgba(155, 93, 229, 0.1);
+
+    #icon {
+        width: 28px;
+        height: 28px;
+        color: #9B5DE5;
+
+    }
+}
+
+.whyChooseUsIcon3 {
+    background-color: rgba(14, 165, 233, 0.1);
+
+    #icon {
+        width: 28px;
+        height: 28px;
+        color: #0EA5E9;
+
+    }
+}
+
+.whyChooseUsIcon4 {
+    background-color: rgba(16, 185, 129, 0.1);
+
+    #icon {
+        width: 28px;
+        height: 28px;
+        color: #10B981;
+
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .whyChooseUsContainer {
+        padding: 30px 20px;
+    }
+
+    .whyChooseUs h1 {
+        font-size: 32px;
+        line-height: 38px;
+        text-align: center;
+    }
+
+    .whyChooseUsItems {
+        flex-direction: column;
+        padding: 10px 0;
+        gap: 40px;
+    }
+}

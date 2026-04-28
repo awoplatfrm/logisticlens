@@ -1,0 +1,137 @@
+.footerContainer {
+    width: 100%;
+    height: auto;
+    padding: 40px 120px;
+    margin-top: 150px;
+    background-color: #D9D9D9;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.footerLogoContainer {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerLogo {
+    width: 60%;
+    height: 60%;
+}
+
+.footerContentContainer {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 50px;
+
+
+}
+
+.footerContent,
+.footerFollowUsContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footerContent h4,
+.footerFollowUsContent h4 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    border-bottom: .1rem solid rgb(197, 196, 196);
+    padding-bottom: 10px
+}
+
+.footerContent button {
+    border: none;
+    background: none;
+    font-size: 1.12rem;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    font-weight: bold;
+
+}
+
+
+.footerContent button p {
+    font-size: 1.1rem;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.footerFollowUsContent button {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    background: none;
+    font-size: 1.12rem;
+    text-align: center;
+    line-height: 28px;
+    letter-spacing: 0.25px;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0px;
+
+}
+
+.footerFollowUsContent button p {
+    font-size: 1.1rem;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+}
+
+.footerFollowUsContent button .footerIcon {
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .footerContainer {
+        padding: 40px 20px;
+        flex-direction: column;
+        height: auto;
+        gap: 40px;
+        margin-top: 50px;
+    }
+
+    .footerLogoContainer,
+    .footerContentContainer {
+        width: 100%;
+    }
+
+    .footerContentContainer {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .footerFollowUsContent button {
+        justify-content: center;
+    }
+
+    .footerLogo {
+        width: 15%;
+    }
+}

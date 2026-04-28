@@ -1,0 +1,10 @@
+//Blue light color
+#F7FBFC
+#D6E6F2
+#B9D7EA
+#769FCD
+//Dark Navy  Blue
+#27374D
+#526D82
+#9DB2BF
+#DDE6ED

@@ -1,0 +1,79 @@
+.serviceContainer {
+    width: 100%;
+    height: 100%;
+    padding: 30px 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+
+}
+
+.serviceContainer h1 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    text-wrap: wrap;
+
+}
+
+.serviceContainer p {
+    font-size: 1.125rem;
+    font-weight: 500;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    text-wrap: wrap;
+}
+
+.serviceCardsContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+
+}
+
+.serviceCard {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+}
+
+.serviceCard p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #ffff;
+    position: absolute;
+    z-index: 2;
+    bottom: 20px;
+    left: 80px;
+}
+
+.serviceCard img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .serviceContainer {
+        padding: 30px 20px;
+    }
+
+    .serviceContainer h1 {
+        font-size: 2.2rem;
+        line-height: 42px;
+        text-align: center;
+    }
+
+    .serviceCardsContainer {
+        flex-direction: column;
+    }
+}

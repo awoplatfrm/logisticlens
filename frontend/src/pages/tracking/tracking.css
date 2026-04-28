@@ -1,0 +1,272 @@
+/* frontend/src/pages/Tracking.css */
+
+.tracking-page {
+    min-height: 100vh;
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 50%); */
+    background-color: #333;
+    padding: 60px 20px;
+    color: #fff;
+}
+
+.tracking-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.tracking-container h1 {
+    text-align: center;
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.tracking-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.tracking-input {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.tracking-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.tracking-button {
+    padding: 15px 30px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.tracking-button:hover {
+    background: #5a67d8;
+}
+
+.tracking-result {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 30px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: #ffc107;
+    color: #333;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.tracking-number-display {
+    font-family: monospace;
+    font-size: 18px;
+    color: #667eea;
+    margin-bottom: 30px;
+    padding: 10px;
+    background: #f0f4ff;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.progress-tracker {
+    margin-bottom: 30px;
+    padding-left: 20px;
+}
+
+.progress-step {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.progress-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 20px;
+    bottom: -15px;
+    width: 2px;
+    background: #e0e0e0;
+}
+
+.progress-step.completed:not(:last-child)::before {
+    background: #28a745;
+}
+
+.step-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    z-index: 1;
+}
+
+.completed .step-dot {
+    background: #28a745;
+}
+
+.active .step-dot {
+    background: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+    }
+}
+
+.step-info {
+    flex: 1;
+}
+
+.step-title {
+    display: block;
+    font-weight: 600;
+    color: #333;
+}
+
+.step-date,
+.step-location,
+.step-estimate {
+    font-size: 14px;
+    color: #666;
+}
+
+.step-location {
+    color: #999;
+    margin-top: 2px;
+}
+
+.step-estimate {
+    color: #667eea;
+}
+
+.shipment-details,
+.tracking-history {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.shipment-details h3,
+.tracking-history h3 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 18px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-item {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+}
+
+.history-time {
+    min-width: 80px;
+    color: #666;
+}
+
+.history-desc {
+    flex: 1;
+    color: #333;
+}
+
+.history-location {
+    color: #999;
+}
+
+@media (max-width: 600px) {
+    .tracking-container {
+        padding: 20px;
+    }
+
+    .tracking-form {
+        flex-direction: column;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .history-item {
+        flex-wrap: wrap;
+    }
+
+    .history-time {
+        min-width: 70px;
+    }
+
+    .history-location {
+        width: 100%;
+        padding-left: 85px;
+    }
+}
