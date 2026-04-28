@@ -26,17 +26,6 @@ const TrackingResult: React.FC<ExtendedTrackingProps> = ({ shipment }) => {
         return types[type] || type;
     };
 
-    // Get status badge class
-    const getStatusClass = (status?: string) => {
-        switch (status?.toLowerCase()) {
-            case 'delivered': return 'status-delivered';
-            case 'in_transit': return 'status-transit';
-            case 'out_for_delivery': return 'status-out';
-            case 'pending': return 'status-pending';
-            default: return 'status-default';
-        }
-    };
-
     const isDelivered = shipment.current_status?.toLowerCase() === 'delivered';
 
     return (
