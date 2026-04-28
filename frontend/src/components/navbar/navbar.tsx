@@ -1,4 +1,3 @@
-import logo from '../../assets/logo/logisticlens-high-resolution-logo-transparent.png'
 import './navbar.css'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'

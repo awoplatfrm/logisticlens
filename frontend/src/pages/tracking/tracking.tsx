@@ -2,7 +2,7 @@ import './tracking.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { shipments } from '../../services/shipments';
-import { ShipmentFormData, TrackingDetailsProps } from '../../types/shipment.types';
+import { TrackingDetailsProps } from '../../types/shipment.types';
 import TrackingResult from './trackingDetails';
 import { authenticate } from '../../services/auth';
 

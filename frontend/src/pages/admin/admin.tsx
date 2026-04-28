@@ -1,5 +1,5 @@
 // frontend/src/pages/AdminDashboard.tsx
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { shipments } from '../../services/shipments';
 import { authenticate } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
