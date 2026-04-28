@@ -55,6 +55,7 @@ const AdminDashboard = () => {
       const [successMessage, setSuccessMessage] = useState('');
       const [errorMessage, setErrorMessage] = useState('');
       const [actionLoading, setActionLoading] = useState(false);
+      const [fetchError, setFetchError] = useState('');
 
       // Pagination & Search State
       const [searchTerm, setSearchTerm] = useState('');
@@ -102,14 +103,20 @@ const AdminDashboard = () => {
       const fetchShipments = async () => {
             try {
                   setLoading(true);
+                  setFetchError('');
                   const response = await shipments.get_all_shipment();
 
                   setShipment(response.data);
-            } catch (error) {
-                  setErrorMessage('Failed to fetch shipments');
+            } catch (error: any) {
+                  if (!navigator.onLine) {
+                        setFetchError('No internet connection. Please check your network and try again.');
+                  } else if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+                        setFetchError('Request timed out. The server took too long to respond.');
+                  } else {
+                        setFetchError(error?.response?.data?.message || 'Failed to fetch shipments.');
+                  }
             } finally {
                   setLoading(false);
-                  setErrorMessage('');
             }
       };
 
@@ -297,7 +304,7 @@ const AdminDashboard = () => {
       return (
             <div className="dashboard-container">
                   <div className="dashboard-header">
-                        <h1>Admin Dashboard</h1>
+                        <h1><i className="bi bi-speedometer2 text-primary" style={{ marginRight: '10px' }}></i>Admin Dashboard</h1>
                         <div className="header-actions">
                               <button
                                     className="btn-refresh"
@@ -350,7 +357,24 @@ const AdminDashboard = () => {
 
                   <div className="shipments-table-container">
                         {loading ? (
-                              <div className="loading">Loading shipments...</div>
+                              <div style={{ textAlign: 'center', padding: '50px' }}>
+                                    <div className="spinner-border" style={{ color: '#667eea', width: '3rem', height: '3rem' }} role="status">
+                                          <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p style={{ marginTop: '15px', color: '#555', fontWeight: '500' }}>Fetching shipments...</p>
+                              </div>
+                        ) : fetchError ? (
+                              <div style={{ textAlign: 'center', padding: '50px', color: '#dc3545' }}>
+                                    <h4>⚠️ {fetchError}</h4>
+                                    <button onClick={fetchShipments} style={{ marginTop: '15px', padding: '8px 20px', backgroundColor: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>
+                                          🔄 Retry Connection
+                                    </button>
+                              </div>
+                        ) : shipment.length === 0 ? (
+                              <div style={{ textAlign: 'center', padding: '50px', color: '#666' }}>
+                                    <h4>No shipments found.</h4>
+                                    <p>Click "+ New Shipment" to register a package.</p>
+                              </div>
                         ) : (
                               <table className="shipments-table">
                                     <thead>
@@ -417,7 +441,7 @@ const AdminDashboard = () => {
                         )}
 
                         {/* Pagination Controls */}
-                        {!loading && totalPages > 1 && (
+                        {!loading && !fetchError && totalPages > 1 && (
                               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '15px', marginTop: '20px', padding: '10px 0' }}>
                                     <button
                                           className="btn-cancel"
