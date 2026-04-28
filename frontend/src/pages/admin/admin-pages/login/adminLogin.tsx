@@ -1,6 +1,6 @@
 // frontend/src/pages/AdminLogin.tsx
 import React from 'react';
-import './AdminLogin.css';
+import './adminLogin.css';
 import { authenticate } from '../../../../services/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
