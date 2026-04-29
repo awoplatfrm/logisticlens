@@ -259,6 +259,7 @@ const AdminDashboard = () => {
                         setTimeout(() => setSuccessMessage(''), 3000);
                         setShowModal(false);
                   }
+
             } catch (error: any) {
                   setErrorMessage(error?.response?.data?.message || 'Failed to send email');
                   setTimeout(() => setErrorMessage(''), 3000);

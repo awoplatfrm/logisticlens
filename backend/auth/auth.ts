@@ -78,8 +78,8 @@ export class Auth extends Database {
             const userId = decoded.id.toString() as string;
 
 
-            const admin = await this.db.collection("admin").findOne({ _id: new ObjectId(userId), token: decoded.currentToken });
-            return !!admin
+            const admin = await this.db.collection("admins").findOne({ _id: new ObjectId(userId), currentToken: token });
+            return !!admin;
 
 
         } catch (error) {

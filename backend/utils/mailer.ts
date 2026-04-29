@@ -4,9 +4,7 @@ dotenv.config();
 
 // Create a transporter using Gmail
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // true for port 465, false for other ports
+    service: 'gmail',
     auth: {
         user: process.env.EMAIL_USER as string, // Your Gmail address
         pass: process.env.EMAIL_PASS as string  // Your Gmail App Password
@@ -36,11 +34,11 @@ export const sendTrackingEmail = async (customerEmail: string, customerName: str
         };
 
         const info = await transporter.sendMail(mailOptions);
-        console.log('Tracking Email sent: ' + info.response);
-        return true;
-    } catch (error) {
+        // console.log('Tracking Email sent: ' + info.response);
+        return { success: true };
+    } catch (error: any) {
         console.error('Error sending email:', error);
-        return false;
+        return { success: false, error: error.message };
     }
 };
 
@@ -60,9 +58,10 @@ export const sendDynamicEmail = async (customerEmail: string, customerName: stri
             `
         };
         const info = await transporter.sendMail(mailOptions);
-        return true;
-    } catch (error) {
+        // console.log(info)
+        return { success: true };
+    } catch (error: any) {
         console.error('Error sending dynamic email:', error);
-        return false;
+        return { success: false, error: error.message };
     }
 };

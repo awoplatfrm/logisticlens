@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Auth } from "../auth/auth";
 
 const auth = new Auth();
-export const AuthenticateAdmin = (request: Request, response: Response, next: NextFunction) => {
+export const AuthenticateAdmin = async (request: Request, response: Response, next: NextFunction) => {
     try {
         const token = request.header("Authorization")?.split(" ")[1] as string;
 
@@ -10,9 +10,10 @@ export const AuthenticateAdmin = (request: Request, response: Response, next: Ne
             response.status(401).send({
                 message: "authorization needed",
             });
+            return;
         }
 
-        const isValid = auth.verifyToken(token);
+        const isValid = await auth.verifyToken(token);
         if (!isValid) {
             response.status(401).send({
                 message: 'Your session has expired or you are logged in elsewhere',
@@ -20,6 +21,7 @@ export const AuthenticateAdmin = (request: Request, response: Response, next: Ne
                 isLoggedIn: false,
                 forceLogout: true
             })
+            return;
         }
 
         (request as any).token = token;

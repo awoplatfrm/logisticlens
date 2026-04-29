@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express, { Express, Request, Response, NextFunction, RequestHandler, ErrorRequestHandler } from "express";
 const app: Express = express();
 import cors from "cors";
@@ -11,8 +13,14 @@ import { sendTrackingEmail, sendDynamicEmail } from "./utils/mailer";
 
 // Security Middlewares
 app.use(helmet());
+
+// Trust the reverse proxy (Render/Cloudflare) so express-rate-limit gets the correct user IP
+app.set('trust proxy', 1);
+
+// STRICT CORS: Only allow your specific frontend domain or localhost to access the API
+const allowedOrigins = process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['http://localhost:5173'];
 app.use(cors({
-    origin: process.env.FRONTEND_URL || '*', // Note: In production, replace '*' with your actual frontend domain
+    origin: allowedOrigins,
     credentials: true
 }));
 app.use(express.json());
@@ -118,17 +126,23 @@ app.post("/api/admin/registerShipment", AuthenticateAdmin, async (req: Request, 
         })
     } else {
 
+        let emailStatus = "not sent";
         // Send tracking email notification
         if (shipment_data.email) {
-            await sendTrackingEmail(
+            const emailResult = await sendTrackingEmail(
                 shipment_data.email,
                 shipment_data.name || "Customer",
                 shipment_data.tracking_number
             );
+            if (emailResult.success) {
+                emailStatus = "sent successfully";
+            } else {
+                emailStatus = `failed (${emailResult.error})`;
+            }
         }
 
         res.status(feedback?.code || 200).send({
-            message: feedback?.message,
+            message: `${feedback?.message}. Email ${emailStatus}.`,
             code: feedback?.code,
             data: feedback?.data
         })
@@ -184,12 +198,12 @@ app.post("/api/admin/sendEmail/:trackingNumber", AuthenticateAdmin, async (req: 
         `;
     }
 
-    const emailSent = await sendDynamicEmail(shipment.email, shipment.name || "Customer", finalSubject, htmlContent);
+    const emailResult = await sendDynamicEmail(shipment.email, shipment.name || "Customer", finalSubject, htmlContent);
 
-    if (emailSent) {
+    if (emailResult.success) {
         res.status(200).send({ code: 200, message: "Email sent successfully!", data: null });
     } else {
-        res.status(500).send({ code: 500, message: "Failed to send email.", data: null });
+        res.status(500).send({ code: 500, message: `Failed to send email: ${emailResult.error}`, data: null });
     }
 });
 
