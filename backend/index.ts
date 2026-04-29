@@ -170,7 +170,7 @@ app.post("/api/admin/sendEmail/:trackingNumber", AuthenticateAdmin, async (req: 
     let finalSubject = subject;
     let htmlContent = "";
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-    const trackLink = `<a href="${frontendUrl}/track/${trackingNumber}" style="display: inline-block; padding: 10px 20px; margin: 15px 0; color: #fff; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); text-decoration: none; border-radius: 6px; font-weight: bold;">Track Shipment</a>`;
+    const trackLink = `<a href="${frontendUrl}/track/${trackingNumber}" style="display: inline-block; padding: 10px 20px; margin: 15px 0; color: #ffffff; background-color: #667eea; text-decoration: none; border-radius: 6px; font-weight: bold; border: 1px solid #667eea;">Track Shipment &rarr;</a>`;
 
     if (type === 'registration') {
         finalSubject = `Your Shipment has been Registered - Tracking ID: ${trackingNumber}`;
