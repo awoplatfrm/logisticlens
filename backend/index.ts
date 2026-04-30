@@ -18,7 +18,12 @@ app.use(helmet());
 app.set('trust proxy', 1);
 
 // STRICT CORS: Only allow your specific frontend domain or localhost to access the API
-const allowedOrigins = process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['http://localhost:5173'];
+const allowedOrigins = [
+    'http://localhost:5173',
+    process.env.FRONTEND_URL,
+    'https://logisticlens.online',
+    'https://www.logisticlens.online'
+].filter(Boolean) as string[];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true
