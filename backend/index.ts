@@ -169,7 +169,7 @@ app.post("/api/admin/sendEmail/:trackingNumber", AuthenticateAdmin, async (req: 
 
     let finalSubject = subject;
     let htmlContent = "";
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const frontendUrl = process.env.FRONTEND_URL || (process.env.DOMAIN_NAME ? `https://www.${process.env.DOMAIN_NAME}` : 'http://localhost:5173');
     const trackLink = `<a href="${frontendUrl}/track/${trackingNumber}" style="display: inline-block; padding: 10px 20px; margin: 15px 0; color: #ffffff; background-color: #667eea; text-decoration: none; border-radius: 6px; font-weight: bold; border: 1px solid #667eea;">Track Shipment &rarr;</a>`;
 
     if (type === 'registration') {

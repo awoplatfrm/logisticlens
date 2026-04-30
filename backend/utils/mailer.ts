@@ -8,7 +8,7 @@ const fromEmail = process.env.EMAIL_USER || 'onboarding@resend.dev';
 
 export const sendTrackingEmail = async (customerEmail: string, customerName: string, trackingNumber: string) => {
     try {
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const frontendUrl = process.env.FRONTEND_URL || (process.env.DOMAIN_NAME ? `https://www.${process.env.DOMAIN_NAME}` : 'http://localhost:5173');
 
         const { data, error } = await resend.emails.send({
             from: `"LogisticLenz Support" <${fromEmail}>`,
