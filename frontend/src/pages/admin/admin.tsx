@@ -309,6 +309,12 @@ const AdminDashboard = () => {
                         <div className="header-actions">
                               <button
                                     className="btn-refresh"
+                                    onClick={() => navigate('/')}
+                              >
+                                    🏠 Home
+                              </button>
+                              <button
+                                    className="btn-refresh"
                                     onClick={fetchShipments}
                               >
                                     🔄 Refresh

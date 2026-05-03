@@ -2,7 +2,7 @@
 import React from 'react';
 import './adminLogin.css';
 import { authenticate } from '../../../../services/auth';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AdminLogin = () => {
@@ -12,6 +12,13 @@ const AdminLogin = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    // If already logged in, skip login page and go to dashboard
+    useEffect(() => {
+        if (authenticate.isLoggedIn()) {
+            navigate('/admin');
+        }
+    }, [navigate]);
 
 
 

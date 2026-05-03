@@ -10,6 +10,7 @@ export const AuthenticateAdmin = async (request: Request, response: Response, ne
             response.status(401).send({
                 message: "authorization needed",
             });
+            return;
         }
 
         const isValid = await auth.verifyToken(token);
@@ -20,6 +21,7 @@ export const AuthenticateAdmin = async (request: Request, response: Response, ne
                 isLoggedIn: false,
                 forceLogout: true
             })
+            return;
         }
 
         (request as any).token = token;
@@ -32,6 +34,7 @@ export const AuthenticateAdmin = async (request: Request, response: Response, ne
             isLoggedIn: false,
             forceLogout: true
         });
+        return;
     }
 
 

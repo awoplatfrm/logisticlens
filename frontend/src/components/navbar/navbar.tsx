@@ -30,7 +30,6 @@ function Navbar() {
                     <li className='nav-item'><Link to={'/'}>Service</Link></li>
                     <li className='nav-item'><Link to={"/"}>About</Link></li>
                     <li className='nav-item'><Link to={"/"}>Contact</Link></li>
-                    <li className='nav-item'><Link to={"/admin/login"}>Login</Link></li>
                 </ul>
             </div>
 

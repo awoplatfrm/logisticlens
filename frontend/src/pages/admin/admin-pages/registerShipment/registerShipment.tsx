@@ -143,6 +143,13 @@ const AdminShipmentForm = () => {
 
     return (
         <div className="shipment-container">
+            <button
+                onClick={() => navigate('/admin')}
+                style={{ padding: '10px 20px', background: '#ffffff', border: '1px solid #eef2f6', borderRadius: '8px', cursor: 'pointer', marginBottom: '20px', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#555', fontWeight: 600, boxShadow: '0 2px 4px rgba(0,0,0,0.05)', alignSelf: 'flex-start' }}
+            >
+                &larr; Back to Dashboard
+            </button>
+
             <div className="shipment-card">
                 <div className="shipment-header">
                     <h2>Register New Shipment</h2>
@@ -465,7 +472,7 @@ const AdminShipmentForm = () => {
                         <button
                             type="button"
                             className="btn-cancel"
-                            onClick={() => navigate('/admin/dashboard')}
+                            onClick={() => navigate('/admin')}
                             disabled={loading}
                         >
                             Cancel

@@ -55,15 +55,16 @@ app.use("/api/admin/login", loginLimiter);
 
 app.post("/api/admin/login", async (request: Request, response: Response) => {
 
-    const email = request.body.email.trim();
-    const password = request.body.password.trim();
+    const email = request.body.email?.trim() || "";
+    const password = request.body.password?.trim() || "";
 
     if (!email || !password) {
         response.status(404).send({
             message: "email and password required",
             code: 404,
             data: null
-        })
+        });
+        return;
     }
 
     const feedback = await auth.adminLogin(email, password);
