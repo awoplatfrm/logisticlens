@@ -54,11 +54,11 @@ app.use("/api/", globalLimiter);
 app.use("/api/admin/login", loginLimiter);
 
 // TEMPORARY SETUP ROUTE
-app.get("/api/setup-demo", async (request: Request, response: Response) => {
-    const result = await auth.createDemoAdmin();
-    console.log("result", result);
-    response.status(result.code).send(result.message);
-});
+// app.get("/api/setup-demo", async (request: Request, response: Response) => {
+//     const result = await auth.createDemoAdmin();
+//     // console.log("result", result);
+//     response.status(result.code).send(result.message);
+// });
 
 app.post("/api/admin/login", async (request: Request, response: Response) => {
 
