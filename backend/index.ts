@@ -53,6 +53,13 @@ app.use("/api/", globalLimiter);
 // Apply stricter rate limiter to login route
 app.use("/api/admin/login", loginLimiter);
 
+// TEMPORARY SETUP ROUTE
+app.get("/api/setup-demo", async (request: Request, response: Response) => {
+    const result = await auth.createDemoAdmin();
+    // console.log("result", result);
+    response.status(result.code).send(result.message);
+});
+
 app.post("/api/admin/login", async (request: Request, response: Response) => {
 
     const email = request.body.email?.trim() || "";
@@ -68,7 +75,7 @@ app.post("/api/admin/login", async (request: Request, response: Response) => {
     }
 
     const feedback = await auth.adminLogin(email, password);
-    console.log("feedback", feedback)
+    console.log("feedback", feedback.message)
     if (feedback.code === 200) {
         response.status(200).send({
             message: "admin logged in",

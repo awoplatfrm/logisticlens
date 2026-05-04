@@ -66,6 +66,27 @@ export class Auth extends Database {
 
     }
 
+    async createDemoAdmin() {
+        try {
+            const email = "demo@logisticlens.online";
+            const existing = await this.db.collection('admins').findOne({ email });
+            if (existing) {
+                return { code: 200, message: "Demo admin already exists!" };
+            }
+
+            const hashedPassword = await bcrypt.hash("demo12345", 10);
+            await this.db.collection('admins').insertOne({
+                email: email,
+                password: hashedPassword,
+                createdAt: new Date()
+            });
+
+            return { code: 200, message: "Demo admin created successfully! You can now log in with demo@logisticlens.online and demo12345" };
+        } catch (error) {
+            return { code: 500, message: `Error: ${error}` };
+        }
+    }
+
     async verifyToken(token: string): Promise<boolean> {
 
         try {
