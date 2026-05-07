@@ -788,3 +788,22 @@
     z-index: 1040;
     backdrop-filter: blur(2px);
 }
+
+/* Print Fallback Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .printable-waybill,
+    .printable-waybill * {
+        visibility: visible;
+    }
+
+    .printable-waybill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}

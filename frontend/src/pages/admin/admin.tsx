@@ -97,7 +97,8 @@ const AdminDashboard = () => {
       // Printing setup
       const printRef = useRef<HTMLDivElement>(null);
       const handlePrint = useReactToPrint({
-            contentRef: printRef,
+            contentRef: printRef, // Works for standard react-to-print versions
+            documentTitle: 'Shipping_Waybill',
       });
 
       useEffect(() => {
@@ -1123,7 +1124,7 @@ const AdminDashboard = () => {
 
                                                 <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '8px', background: '#f8f9fa' }}>
                                                       {/* This is the div that will actually be printed */}
-                                                      <div ref={printRef} style={{ padding: '30px', background: '#fff', color: '#000', fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: '0 auto' }}>
+                                                      <div ref={printRef} className="printable-waybill" style={{ padding: '30px', background: '#fff', color: '#000', fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: '0 auto' }}>
                                                             {/* Header */}
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #000', paddingBottom: '15px', marginBottom: '20px' }}>
                                                                   <div>
