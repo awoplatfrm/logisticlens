@@ -35,13 +35,12 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSubmit, onCancel, loading, 
     const toState = State.getStateByCodeAndCountry(quoteData.toStateCode, quoteData.toCountryCode);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value, type } = e.target;
+        const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
         const formattedData = {
             ...formData,
             sender_phone: formData.sender_phone.startsWith('+') ? formData.sender_phone : `+${fromCountry?.phonecode || '234'}${formData.sender_phone.replace(/^0/, '')}`,

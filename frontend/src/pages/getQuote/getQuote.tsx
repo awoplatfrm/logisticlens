@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/navbar/navbar';
 import Footer from '../../components/footer/footer';
-import { Country, State, City } from 'country-state-city';
+import { State } from 'country-state-city';
 import { shipments } from '../../services/shipments';
 import './getQuote.css';
 import QuoteForm from '../../components/quotesForm/QuoteForm';
