@@ -87,6 +87,49 @@ export class Auth extends Database {
         }
     }
 
+    async getAllDemos() {
+        try {
+            const demos = await this.db.collection('admins').find({ role: 'demo' }).project({ password: 0 }).toArray();
+            return { code: 200, message: "Demos retrieved", data: demos };
+        } catch (error) {
+            return { code: 500, message: `Error: ${error}`, data: null };
+        }
+    }
+
+    async createDemoAccount(email: string, password: string) {
+        try {
+            const existing = await this.db.collection('admins').findOne({ email });
+            if (existing) {
+                return { code: 400, message: "An account with this email already exists!", data: null };
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await this.db.collection('admins').insertOne({
+                email: email,
+                password: hashedPassword,
+                role: 'demo',
+                createdAt: new Date()
+            });
+
+            return { code: 200, message: "Demo account created successfully!", data: null };
+        } catch (error) {
+            return { code: 500, message: `Error: ${error}`, data: null };
+        }
+    }
+
+    async deleteDemoAccount(id: string) {
+        try {
+            const result = await this.db.collection('admins').deleteOne({ _id: new ObjectId(id) });
+            if (result.deletedCount > 0) {
+                return { code: 200, message: "Demo account deleted successfully!", data: null };
+            } else {
+                return { code: 404, message: "Demo account not found!", data: null };
+            }
+        } catch (error) {
+            return { code: 500, message: `Error: ${error}`, data: null };
+        }
+    }
+
     async verifyToken(token: string): Promise<boolean> {
 
         try {
@@ -118,6 +161,9 @@ export class ShipmentOperations extends Database {
     generateTrackNumber(): string {
         const name = "LENZ"
         return `${name}-${Math.random().toString(34).substring(2, 9).toUpperCase()}`
+    }
+    async registerTerminalShipment(shipment_data: ShipmentFormData) {
+        return await this.db.collection("shipments").insertOne(shipment_data);
     }
     async registerShipment(shipment_data: ShipmentFormData) {
         // console.log("shipment data", shipment_data);

@@ -6,6 +6,13 @@ import { ShipmentFormData } from "../types/shipment.types";
 
 export const shipments = {
 
+    get_rates: async (shipment_data: any) => {
+        return await api.post('/get-rates', shipment_data)
+    },
+
+    book_shipment: async (booking_data: any) => {
+        return await api.post('/book-shipment', booking_data);
+    },
     register_shipment: async (shipment_data: ShipmentFormData) => {
         return await api.post('/admin/registerShipment', shipment_data)
     },

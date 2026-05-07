@@ -13,24 +13,24 @@ function Service() {
                 <h1>Our Core Competencies lies in <br /> the Four Pillars</h1>
                 <p>Specializing in international transport, Logistics and freight forwarding, <br />we connect continents with precision, ensuring seamless and efficient global delivery solution</p>
                 <div className="serviceCardsContainer">
-                    <div className="serviceCard">                  
-                            <img src={image3} alt="image1"/>                      
+                    <div className="serviceCard">
+                        <img src={image3} alt="image1" />
                         <p>Road freight</p>
                     </div>
                     <div className="serviceCard">
-                            <img src={image1} alt="image2"  />
+                        <img src={image1} alt="image2" />
                         <p>Air freight</p>
                     </div>
-                    <div className="serviceCard">                
-                            <img src={image2} alt="image3"  />
+                    <div className="serviceCard">
+                        <img src={image2} alt="image3" />
                         <p>Ocean freight</p>
                     </div>
-                   
+
                 </div>
-        
+
             </div>
         </>
-      );
+    );
 }
 
 export default Service;

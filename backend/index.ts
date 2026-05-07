@@ -6,9 +6,10 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { Auth, ShipmentOperations } from './auth/auth'
-import { AuthenticateAdmin } from "./middleware/authAdmin";
+import { AuthenticateAdmin, RestrictDemoAdmin } from "./middleware/authAdmin";
 import { ShipmentFormData } from "./types/auth.types";
 import { sendTrackingEmail, sendDynamicEmail } from "./utils/mailer";
+import terminalRoutes from "./terminalRoutes";
 
 
 // Security Middlewares
@@ -53,6 +54,15 @@ app.use("/api/", globalLimiter);
 // Apply stricter rate limiter to login route
 app.use("/api/admin/login", loginLimiter);
 
+// TEMPORARY TERMINAL AFRICA TEST ROUTE
+// app.get("/api/test-terminal", async (request: Request, response: Response) => {
+//     const result = await TerminalService.getCarriers();
+//     response.send(result);
+// });
+
+// Terminal Africa Routes
+app.use("/api", terminalRoutes);
+
 // TEMPORARY SETUP ROUTE
 // app.get("/api/setup-demo", async (request: Request, response: Response) => {
 //     const result = await auth.createDemoAdmin();
@@ -90,9 +100,29 @@ app.post("/api/admin/login", async (request: Request, response: Response) => {
 
 });
 
+app.get("/api/admin/demos", AuthenticateAdmin, RestrictDemoAdmin, async (request: Request, response: Response) => {
+    const feedback = await auth.getAllDemos();
+    response.status(feedback.code).send(feedback);
+});
+
+app.post("/api/admin/demos", AuthenticateAdmin, RestrictDemoAdmin, async (request: Request, response: Response) => {
+    const { email, password } = request.body;
+    if (!email || !password) {
+        response.status(400).send({ code: 400, message: "Email and password are required", data: null });
+        return;
+    }
+    const feedback = await auth.createDemoAccount(email, password);
+    response.status(feedback.code).send(feedback);
+});
+
+app.delete("/api/admin/demos/:id", AuthenticateAdmin, RestrictDemoAdmin, async (request: Request, response: Response) => {
+    const { id } = request.params;
+    const feedback = await auth.deleteDemoAccount(id);
+    response.status(feedback.code).send(feedback);
+});
 
 
-app.post("/api/admin/registerShipment", AuthenticateAdmin, async (req: Request, res: Response) => {
+app.post("/api/admin/registerShipment", AuthenticateAdmin, RestrictDemoAdmin, async (req: Request, res: Response) => {
 
 
 
@@ -164,7 +194,7 @@ app.post("/api/admin/registerShipment", AuthenticateAdmin, async (req: Request, 
 
 })
 
-app.post("/api/admin/sendEmail/:trackingNumber", AuthenticateAdmin, async (req: Request, res: Response) => {
+app.post("/api/admin/sendEmail/:trackingNumber", AuthenticateAdmin, RestrictDemoAdmin, async (req: Request, res: Response) => {
     const trackingNumber = req.params.trackingNumber?.trim();
     const { type, subject, message } = req.body;
 
@@ -253,7 +283,7 @@ app.get("/api/admin/getAllShipment", AuthenticateAdmin, async (request: Request,
     response.status(feedback.code).send(feedback.data)
 })
 
-app.put("/api/admin/updateShipment/:trackingNumber", AuthenticateAdmin, async (request: Request, response: Response) => {
+app.put("/api/admin/updateShipment/:trackingNumber", AuthenticateAdmin, RestrictDemoAdmin, async (request: Request, response: Response) => {
     const trackingNumber = request.params.trackingNumber.trim();
     const updateData = { ...request.body };
 
@@ -281,7 +311,7 @@ app.put("/api/admin/updateShipment/:trackingNumber", AuthenticateAdmin, async (r
     }
 });
 
-app.put("/api/admin/updateShipment/:trackingNumber/status", AuthenticateAdmin, async (request: Request, response: Response) => {
+app.put("/api/admin/updateShipment/:trackingNumber/status", AuthenticateAdmin, RestrictDemoAdmin, async (request: Request, response: Response) => {
 
 
     const { trackingNumber } = request.params;
@@ -345,7 +375,7 @@ app.put("/api/admin/updateShipment/:trackingNumber/status", AuthenticateAdmin, a
 
 });
 
-app.delete("/api/admin/deleteShipment/:trackingNumber", AuthenticateAdmin, async (request: Request, response: Response) => {
+app.delete("/api/admin/deleteShipment/:trackingNumber", AuthenticateAdmin, RestrictDemoAdmin, async (request: Request, response: Response) => {
     const { trackingNumber } = request.params
     const feedback = await shipment_operations.deleteShipment(trackingNumber.trim());
     if (feedback.code !== 200) {

@@ -4,41 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { shipments } from '../../../../services/shipments';
 import { ShipmentFormData } from '../../../../types/shipment.types';
 import './registerShipment.css'
-
-// interface ShipmentFormData {
-//     // Customer Information
-//     name: string;
-//     email: string;
-//     phone: string;
-
-//     // Origin Address (From)
-//     from_address: string;
-//     from_city: string;
-//     from_state: string;
-//     from_postal_code: string;
-//     from_country: string;
-
-//     // Destination Address (To)
-//     to_address: string;
-//     to_city: string;
-//     to_state: string;
-//     to_postal_code: string;
-//     to_country: string;
-
-//     // Package Details
-//     product: string;
-//     quantity: number;
-//     weight: number;
-//     dimensions: string;
-//     service_type: string;
-//     package_type: string;
-
-//     // Additional Options
-//     insurance: boolean;
-//     signature_required: boolean;
-//     saturday_delivery: boolean;
-//     special_instructions: string;
-// }
+import { Country, State, City } from 'country-state-city';
 
 const AdminShipmentForm = () => {
     const navigate = useNavigate();
@@ -75,6 +41,17 @@ const AdminShipmentForm = () => {
         saturday_delivery: false,
         special_instructions: ''
     });
+
+    // Local state for dynamic geographic codes
+    const [fromCountryCode, setFromCountryCode] = useState('');
+    const [fromStateCode, setFromStateCode] = useState('');
+    const [toCountryCode, setToCountryCode] = useState('');
+    const [toStateCode, setToStateCode] = useState('');
+
+    const fromStates = fromCountryCode ? State.getStatesOfCountry(fromCountryCode) : [];
+    const fromCities = fromStateCode ? City.getCitiesOfState(fromCountryCode, fromStateCode) : [];
+    const toStates = toCountryCode ? State.getStatesOfCountry(toCountryCode) : [];
+    const toCities = toStateCode ? City.getCitiesOfState(toCountryCode, toStateCode) : [];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { id, value, type } = e.target;
@@ -131,6 +108,10 @@ const AdminShipmentForm = () => {
                     saturday_delivery: false,
                     special_instructions: ''
                 });
+                setFromCountryCode('');
+                setFromStateCode('');
+                setToCountryCode('');
+                setToStateCode('');
             } else {
                 setError(response.data.message || 'Failed to register shipment');
             }
@@ -218,54 +199,65 @@ const AdminShipmentForm = () => {
                         </div>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="from_city">City *</label>
-                                <input
-                                    type="text"
-                                    id="from_city"
-                                    value={formData.from_city}
-                                    onChange={handleChange}
-                                    placeholder="New York"
+                                <label htmlFor="from_country">Country *</label>
+                                <select
+                                    id="from_country"
+                                    value={fromCountryCode}
+                                    onChange={(e) => {
+                                        const code = e.target.value;
+                                        setFromCountryCode(code);
+                                        setFromStateCode('');
+                                        setFormData(prev => ({ ...prev, from_country: Country.getCountryByCode(code)?.name || '', from_state: '', from_city: '' }));
+                                    }}
                                     required
-                                />
+                                >
+                                    <option value="">Select country</option>
+                                    {Country.getAllCountries().map(c => (
+                                        <option key={c.isoCode} value={c.isoCode}>{c.name}</option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="from_state">State/Province *</label>
-                                <input
-                                    type="text"
-                                    id="from_state"
-                                    value={formData.from_state}
-                                    onChange={handleChange}
-                                    placeholder="NY"
-                                    required
-                                />
+                                {fromStates.length > 0 ? (
+                                    <select
+                                        id="from_state"
+                                        value={fromStateCode}
+                                        onChange={(e) => {
+                                            const code = e.target.value;
+                                            setFromStateCode(code);
+                                            setFormData(prev => ({ ...prev, from_state: State.getStateByCodeAndCountry(code, fromCountryCode)?.name || '', from_city: '' }));
+                                        }}
+                                        required
+                                        disabled={!fromCountryCode}
+                                    >
+                                        <option value="">Select state</option>
+                                        {fromStates.map(s => (
+                                            <option key={s.isoCode} value={s.isoCode}>{s.name}</option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input type="text" id="from_state" value={formData.from_state} onChange={handleChange} placeholder="State/Province" required disabled={!fromCountryCode} />
+                                )}
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="from_postal_code">Postal Code *</label>
-                                <input
-                                    type="text"
-                                    id="from_postal_code"
-                                    value={formData.from_postal_code}
-                                    onChange={handleChange}
-                                    placeholder="10001"
-                                    required
-                                />
+                                <label htmlFor="from_city">City *</label>
+                                {fromCities.length > 0 ? (
+                                    <select id="from_city" value={formData.from_city} onChange={handleChange} required disabled={!fromStateCode && fromStates.length > 0}>
+                                        <option value="">Select city</option>
+                                        {fromCities.map(c => (
+                                            <option key={c.name} value={c.name}>{c.name}</option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input type="text" id="from_city" value={formData.from_city} onChange={handleChange} placeholder="City" required disabled={!fromCountryCode} />
+                                )}
                             </div>
                             <div className="form-group">
-                                <label htmlFor="from_country">Country *</label>
-                                <select
-                                    id="from_country"
-                                    value={formData.from_country}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select country</option>
-                                    <option value="US">United States</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="ET">Ethiopia</option>
-                                </select>
+                                <label htmlFor="from_postal_code">Postal Code *</label>
+                                <input type="text" id="from_postal_code" value={formData.from_postal_code} onChange={handleChange} placeholder="10001" required />
                             </div>
                         </div>
                     </div>
@@ -286,54 +278,65 @@ const AdminShipmentForm = () => {
                         </div>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="to_city">City *</label>
-                                <input
-                                    type="text"
-                                    id="to_city"
-                                    value={formData.to_city}
-                                    onChange={handleChange}
-                                    placeholder="Los Angeles"
+                                <label htmlFor="to_country">Country *</label>
+                                <select
+                                    id="to_country"
+                                    value={toCountryCode}
+                                    onChange={(e) => {
+                                        const code = e.target.value;
+                                        setToCountryCode(code);
+                                        setToStateCode('');
+                                        setFormData(prev => ({ ...prev, to_country: Country.getCountryByCode(code)?.name || '', to_state: '', to_city: '' }));
+                                    }}
                                     required
-                                />
+                                >
+                                    <option value="">Select country</option>
+                                    {Country.getAllCountries().map(c => (
+                                        <option key={c.isoCode} value={c.isoCode}>{c.name}</option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="to_state">State/Province *</label>
-                                <input
-                                    type="text"
-                                    id="to_state"
-                                    value={formData.to_state}
-                                    onChange={handleChange}
-                                    placeholder="CA"
-                                    required
-                                />
+                                {toStates.length > 0 ? (
+                                    <select
+                                        id="to_state"
+                                        value={toStateCode}
+                                        onChange={(e) => {
+                                            const code = e.target.value;
+                                            setToStateCode(code);
+                                            setFormData(prev => ({ ...prev, to_state: State.getStateByCodeAndCountry(code, toCountryCode)?.name || '', to_city: '' }));
+                                        }}
+                                        required
+                                        disabled={!toCountryCode}
+                                    >
+                                        <option value="">Select state</option>
+                                        {toStates.map(s => (
+                                            <option key={s.isoCode} value={s.isoCode}>{s.name}</option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input type="text" id="to_state" value={formData.to_state} onChange={handleChange} placeholder="State/Province" required disabled={!toCountryCode} />
+                                )}
                             </div>
                         </div>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="to_postal_code">Postal Code *</label>
-                                <input
-                                    type="text"
-                                    id="to_postal_code"
-                                    value={formData.to_postal_code}
-                                    onChange={handleChange}
-                                    placeholder="90001"
-                                    required
-                                />
+                                <label htmlFor="to_city">City *</label>
+                                {toCities.length > 0 ? (
+                                    <select id="to_city" value={formData.to_city} onChange={handleChange} required disabled={!toStateCode && toStates.length > 0}>
+                                        <option value="">Select city</option>
+                                        {toCities.map(c => (
+                                            <option key={c.name} value={c.name}>{c.name}</option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input type="text" id="to_city" value={formData.to_city} onChange={handleChange} placeholder="City" required disabled={!toCountryCode} />
+                                )}
                             </div>
                             <div className="form-group">
-                                <label htmlFor="to_country">Country *</label>
-                                <select
-                                    id="to_country"
-                                    value={formData.to_country}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select country</option>
-                                    <option value="US">United States</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="ET">Ethiopia</option>
-                                    <option value="UK">United Kingdom</option>
-                                </select>
+                                <label htmlFor="to_postal_code">Postal Code *</label>
+                                <input type="text" id="to_postal_code" value={formData.to_postal_code} onChange={handleChange} placeholder="90001" required />
                             </div>
                         </div>
                     </div>

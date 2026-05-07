@@ -17,6 +17,7 @@
   "dependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.9",
+    "axios": "^1.16.0",
     "bcrypt": "^5.1.1",
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",

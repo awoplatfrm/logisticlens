@@ -15,6 +15,7 @@
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.13.1",
     "country-state-city": "^3.2.1",
+    "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
     "react-barcode": "^1.6.1",
     "react-bootstrap-icons": "^1.11.5",

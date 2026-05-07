@@ -45,7 +45,7 @@ interface Shipment {
 }
 
 const AdminDashboard = () => {
-      const { isLoggedIn } = authenticate
+      const { isLoggedIn, userEmail } = authenticate
       const navigate = useNavigate();
       const [shipment, setShipment] = useState<Shipment[]>([]);
       const [loading, setLoading] = useState(true);
@@ -56,6 +56,14 @@ const AdminDashboard = () => {
       const [errorMessage, setErrorMessage] = useState('');
       const [actionLoading, setActionLoading] = useState(false);
       const [fetchError, setFetchError] = useState('');
+
+      // Demo Management State
+      const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+      const [demos, setDemos] = useState<any[]>([]);
+      const [demoForm, setDemoForm] = useState({ email: '', password: '' });
+
+
+      const isAdmin = userEmail().includes("awoplatfrm");
 
       // Pagination & Search State
       const [searchTerm, setSearchTerm] = useState('');
@@ -100,6 +108,14 @@ const AdminDashboard = () => {
             fetchShipments();
       }, [isLoggedIn, navigate]);
 
+      useEffect(() => {
+            if (isSidebarOpen && isAdmin) {
+                  authenticate.getDemos().then(res => {
+                        setDemos(res.data.data || []);
+                  }).catch(error => console.error("Failed to fetch demos", error));
+            }
+      }, [isSidebarOpen, isAdmin]);
+
       const fetchShipments = async () => {
             try {
                   setLoading(true);
@@ -139,13 +155,49 @@ const AdminDashboard = () => {
                   }
 
 
-            } catch (error) {
-                  setErrorMessage("Failed to delete Shipment");
+            } catch (error: any) {
+                  setErrorMessage(error?.response?.data?.message || error?.data?.message || 'Error deleting user shipment');
+                  setTimeout(() => setErrorMessage(""), 4000);
             } finally {
                   setLoading(false)
             }
 
       }
+
+      const handleCreateDemo = async (e: React.FormEvent) => {
+            e.preventDefault();
+            setActionLoading(true);
+            try {
+                  const res = await authenticate.createDemo(demoForm);
+                  if (res.data.code === 200) {
+                        setSuccessMessage(res.data.message);
+                        setDemoForm({ email: '', password: '' });
+                        const freshDemos = await authenticate.getDemos();
+                        setDemos(freshDemos.data.data || []);
+                  } else {
+                        setErrorMessage(res.data.message);
+                  }
+            } catch (error: any) {
+                  setErrorMessage(error?.response?.data?.message || 'Error creating demo');
+            } finally {
+                  setActionLoading(false);
+                  setTimeout(() => { setSuccessMessage(''); setErrorMessage(''); }, 3000);
+            }
+      };
+
+      const handleDeleteDemo = async (id: string) => {
+            if (!window.confirm("Are you sure you want to delete this demo account?")) return;
+            setActionLoading(true);
+            try {
+                  await authenticate.deleteDemo(id);
+                  const freshDemos = await authenticate.getDemos();
+                  setDemos(freshDemos.data.data || []);
+            } catch (error: any) {
+                  setErrorMessage(error?.response?.data?.message || 'Error deleting demo');
+            } finally {
+                  setActionLoading(false);
+            }
+      };
 
       const handleOpenUpdateModal = (shipment: Shipment) => {
             setSelectedShipment(shipment);
@@ -184,13 +236,13 @@ const AdminDashboard = () => {
                         setSuccessMessage('Status updated successfully!');
                         setTimeout(() => setSuccessMessage(''), 3000);
                         fetchShipments();
-                        setShowModal(false);
                   }
-            } catch (error) {
-                  setErrorMessage('Failed to update status');
-                  setTimeout(() => setErrorMessage(''), 3000);
+            } catch (error: any) {
+                  setErrorMessage(error?.response?.data?.message || error?.data?.message || 'failed to update shipment');
+                  setTimeout(() => setErrorMessage(""), 4000);
             } finally {
                   setActionLoading(false);
+                  setShowModal(false);
             }
       };
 
@@ -205,13 +257,13 @@ const AdminDashboard = () => {
                         setSuccessMessage('Shipment updated successfully!');
                         setTimeout(() => setSuccessMessage(''), 3000);
                         fetchShipments();
-                        setShowModal(false);
                   }
-            } catch (error) {
-                  setErrorMessage('Failed to update shipment');
-                  setTimeout(() => setErrorMessage(''), 3000);
+            } catch (error: any) {
+                  setErrorMessage(error?.response?.data?.message || error?.data?.message || 'failed to update shipment');
+                  setTimeout(() => setErrorMessage(""), 4000);
             } finally {
                   setActionLoading(false);
+                  setShowModal(false);
             }
       };
 
@@ -239,13 +291,13 @@ const AdminDashboard = () => {
                         setSuccessMessage('History updated successfully!');
                         setTimeout(() => setSuccessMessage(''), 3000);
                         fetchShipments();
-                        setShowModal(false);
                   }
-            } catch (error) {
-                  setErrorMessage('Failed to update history');
-                  setTimeout(() => setErrorMessage(''), 3000);
+            } catch (error: any) {
+                  setErrorMessage(error?.response?.data?.message || error?.data?.message || 'failed to save shipment history');
+                  setTimeout(() => setErrorMessage(""), 4000);
             } finally {
                   setActionLoading(false);
+                  setShowModal(false);
             }
       };
 
@@ -257,7 +309,6 @@ const AdminDashboard = () => {
                   if (response.data.code === 200) {
                         setSuccessMessage('Email sent successfully!');
                         setTimeout(() => setSuccessMessage(''), 3000);
-                        setShowModal(false);
                   }
 
             } catch (error: any) {
@@ -265,6 +316,7 @@ const AdminDashboard = () => {
                   setTimeout(() => setErrorMessage(''), 3000);
             } finally {
                   setActionLoading(false);
+                  setShowModal(false);
             }
       };
 
@@ -293,9 +345,9 @@ const AdminDashboard = () => {
 
       // Filter and Paginate Data
       const filteredShipments = shipment.filter(s =>
-            s.tracking_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            s.email.toLowerCase().includes(searchTerm.toLowerCase())
+            (s.tracking_number || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (s.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (s.email || '').toLowerCase().includes(searchTerm.toLowerCase())
       );
 
       const totalPages = Math.ceil(filteredShipments.length / itemsPerPage);
@@ -305,7 +357,10 @@ const AdminDashboard = () => {
       return (
             <div className="dashboard-container">
                   <div className="dashboard-header">
-                        <h1><i className="bi bi-speedometer2 text-primary" style={{ marginRight: '10px' }}></i>Admin Dashboard</h1>
+                        <div>
+                              <h1><i className="bi bi-speedometer2 text-primary" style={{ marginRight: '10px' }}></i>Admin Dashboard</h1>
+                              <span style={{ fontSize: "0.65rem" }}>logged in as <strong>{isAdmin ? 'Admin' : "Demo User"}</strong></span>
+                        </div>
                         <div className="header-actions">
                               <button
                                     className="btn-refresh"
@@ -318,6 +373,13 @@ const AdminDashboard = () => {
                                     onClick={fetchShipments}
                               >
                                     🔄 Refresh
+                              </button>
+                              <button
+                                    className="btn-new"
+                                    onClick={() => setIsSidebarOpen(true)}
+                                    style={{ background: '#fff', color: '#667eea', border: '1px solid #667eea', boxShadow: 'none', display: isAdmin ? 'inline-block' : 'none' }}
+                              >
+                                    👥 Manage Demos
                               </button>
                               <button
                                     className="btn-new"
@@ -1120,6 +1182,58 @@ const AdminDashboard = () => {
                                     ) : null}
                               </div>
                         </div>
+                  )}
+
+                  {/* Demo Management Sidebar */}
+                  {isAdmin && (
+                        <div className={`demo-sidebar ${isSidebarOpen ? 'open' : ''}`}>
+                              <div className="demo-sidebar-header">
+                                    <h3 style={{ margin: 0, fontSize: '18px' }}><i className="bi bi-people-fill me-2"></i> Manage Demos</h3>
+                                    <button className="modal-close" onClick={() => setIsSidebarOpen(false)} style={{ fontSize: '24px' }}>×</button>
+                              </div>
+                              <div className="demo-sidebar-content">
+                                    <div className="form-section">
+                                          <h4 style={{ color: '#333' }}>Create New Demo Account</h4>
+                                          <form onSubmit={handleCreateDemo}>
+                                                <div className="form-group">
+                                                      <label className="label">Demo Email</label>
+                                                      <input type="email" required placeholder="client@company.com" value={demoForm.email} onChange={e => setDemoForm({ ...demoForm, email: e.target.value })} />
+                                                </div>
+                                                <div className="form-group">
+                                                      <label className="label">Password</label>
+                                                      <input type="text" required placeholder="SecurePass123" value={demoForm.password} onChange={e => setDemoForm({ ...demoForm, password: e.target.value })} />
+                                                </div>
+                                                <button type="submit" className="btn-update-status" style={{ width: '100%' }} disabled={actionLoading}>
+                                                      {actionLoading ? 'Processing...' : 'Create Demo'}
+                                                </button>
+                                          </form>
+                                    </div>
+
+                                    <div className="form-section mt-4" style={{ borderTop: '1px solid #eef2f6', paddingTop: '20px', borderBottom: 'none' }}>
+                                          <h4 style={{ color: '#333', marginBottom: '15px' }}>Active Demos</h4>
+                                          {demos.length === 0 ? (
+                                                <p style={{ color: '#666', fontSize: '14px', textAlign: 'center' }}>No demo accounts created yet.</p>
+                                          ) : (
+                                                demos.map(demo => (
+                                                      <div key={demo._id} className="demo-card">
+                                                            <div className="demo-card-info">
+                                                                  <strong style={{ fontSize: '14px', color: '#333' }}>{demo.email}</strong>
+                                                                  <small style={{ color: '#888' }}>Created: {new Date(demo.createdAt).toLocaleDateString()}</small>
+                                                            </div>
+                                                            <button className="btn-delete" style={{ padding: '6px 10px' }} onClick={() => handleDeleteDemo(demo._id)} disabled={actionLoading}>
+                                                                  <i className="bi bi-trash"></i>
+                                                            </button>
+                                                      </div>
+                                                ))
+                                          )}
+                                    </div>
+                              </div>
+                        </div>
+                  )}
+
+                  {/* Sidebar Overlay */}
+                  {isSidebarOpen && isAdmin && (
+                        <div className="demo-sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>
                   )}
             </div>
       );

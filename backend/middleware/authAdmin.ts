@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Auth } from "../auth/auth";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 const auth = new Auth();
 export const AuthenticateAdmin = async (request: Request, response: Response, next: NextFunction) => {
@@ -39,3 +40,25 @@ export const AuthenticateAdmin = async (request: Request, response: Response, ne
 
 
 }
+
+export const RestrictDemoAdmin = (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const token = (request as any).token;
+        if (!token) return next();
+
+        const decoded = jwt.verify(token, process.env.JWT_KEY as string) as JwtPayload;
+
+        if (decoded && !decoded.email.includes('awoplatfrm')) {
+            response.status(403).send({
+                code: 403,
+                message: "Demo Account: You are only allowed to view the functionality of the admin dashboard, but cannot perform any operations.",
+                data: null
+            });
+            return;
+        }
+
+        next();
+    } catch (error) {
+        next();
+    }
+};

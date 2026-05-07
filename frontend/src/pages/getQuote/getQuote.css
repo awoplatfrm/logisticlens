@@ -1,0 +1,317 @@
+.quote-page-wrapper {
+    background-color: #f4f7f6;
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+.quote-page-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+    padding-bottom: 30px;
+}
+
+.quote-title-container {
+    padding: 30px 20px 20px;
+    text-align: center;
+    color: white;
+}
+
+.quote-title-container h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.quote-content-container {
+    max-width: 900px;
+    /* Slightly wider for better readability */
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.quote-form-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin-bottom: 50px;
+}
+
+.quote-form-section-group {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow wrapping on smaller screens */
+    gap: 30px;
+    /* Increased gap for more breathing room */
+    margin-bottom: 30px;
+}
+
+.quote-form-section {
+    flex: 1;
+    /* Distribute space evenly */
+    min-width: 300px;
+    /* Ensure sections don't get too small */
+}
+
+.quote-form-section h5 {
+    font-size: 1.5rem;
+    /* Larger heading */
+    margin-bottom: 25px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.quote-form-group {
+    margin-bottom: 20px;
+    /* Increased spacing between form groups */
+}
+
+.quote-label {
+    display: block;
+    font-size: 0.95rem;
+    /* Slightly larger label */
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.quote-input,
+.quote-select {
+    width: 100%;
+    padding: 14px 18px;
+    /* More padding */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    /* More rounded */
+    font-size: 1.1rem;
+    /* Larger font size for inputs */
+    color: #333;
+    background-color: #fcfcfc;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.quote-input:focus,
+.quote-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.quote-select {
+    appearance: none;
+    /* Remove default select arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+.quote-input-group {
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fcfcfc;
+}
+
+.quote-input-group .quote-input {
+    border: none;
+    flex-grow: 1;
+    padding: 14px 18px;
+    text-align: center;
+}
+
+.quote-input-group .quote-input-addon {
+    padding: 14px 18px;
+    background-color: #eef2f6;
+    color: #666;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-left: 1px solid #e0e0e0;
+}
+
+.quote-submit-button {
+    padding: 16px 40px;
+    /* Larger button */
+    font-size: 1.2rem;
+    /* Larger font */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    /* Pill shape */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.quote-submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.quote-rates-display {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.quote-rates-display h3 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.quote-rates-grid {
+    display: flex;
+    flex-direction: column;
+    /* Single column */
+    align-items: center;
+    /* Center items */
+    gap: 25px;
+    /* Spacing between cards */
+}
+
+.quote-rate-card {
+    width: 100%;
+    max-width: 500px;
+    /* Max width for cards */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #10B981;
+    /* Accent border */
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    /* Add some space between info and price sections */
+}
+
+.quote-rate-card-info h5 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    word-break: break-word;
+    hyphens: auto;
+    line-height: 1.3;
+}
+
+.quote-rate-card-info .badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: #eef2f6;
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: normal;
+    text-align: left;
+}
+
+.quote-rate-card-price {
+    display: flex;
+    /* Make it a flex container */
+    flex-direction: column;
+    /* Stack items vertically */
+    align-items: flex-end;
+    /* Align items to the right */
+    text-align: right;
+    /* Fallback for older browsers */
+    flex-shrink: 0;
+    /* Prevent this section from shrinking too much */
+    min-width: fit-content;
+    /* Ensure it takes at least its content width */
+}
+
+.quote-rate-card-price .currency {
+    font-size: 0.75rem;
+    /* Reduced font size */
+    color: #888;
+    font-weight: 600;
+    display: block;
+}
+
+.quote-rate-card-price h3 {
+    font-size: 1.8rem;
+    font-weight: bolder;
+    color: #10B981;
+    margin: 5px 0;
+}
+
+.quote-book-button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quote-book-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+.quote-recalculate-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    background: #f0f4ff;
+    color: #667eea;
+    border: 1px solid #667eea;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 40px;
+}
+
+.quote-recalculate-button:hover {
+    background: #e0e7ff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .quote-form-card {
+        padding: 30px 20px;
+    }
+
+    .quote-form-section-group {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .quote-form-section {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .quote-title-container h1 {
+        font-size: 2.5rem;
+    }
+
+    .quote-rates-grid {
+        padding: 0 10px;
+    }
+
+    .quote-rate-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .quote-rate-card-price {
+        width: 100%;
+        text-align: left;
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+        margin-top: 15px;
+    }
+}

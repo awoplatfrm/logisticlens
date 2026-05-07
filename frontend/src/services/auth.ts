@@ -1,4 +1,5 @@
 import { api } from "./api";
+import { jwtDecode } from "jwt-decode";
 
 
 export const authenticate = {
@@ -13,5 +14,19 @@ export const authenticate = {
     isLoggedIn: () => {
         const token = localStorage.getItem("token");
         return token ? true : false
+    },
+    userEmail: () => {
+        const token = localStorage.getItem("token");
+        const decoded = jwtDecode(token as string) as any;
+        return decoded.email as string;
+    },
+    getDemos: async () => {
+        return await api.get('/admin/demos');
+    },
+    createDemo: async (data: { email: string, password: string }) => {
+        return await api.post('/admin/demos', data);
+    },
+    deleteDemo: async (id: string) => {
+        return await api.delete(`/admin/demos/${id}`);
     }
-}
+}   
