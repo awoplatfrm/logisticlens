@@ -83,7 +83,7 @@
     color: #ef476f;
 }
 
-.navb-item.logout:hover {
+.navb-item .logout:hover {
     background: #ffe3e3;
     border-left: 3px solid #ef476f;
     color: #ef476f;

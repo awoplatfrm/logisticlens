@@ -430,7 +430,7 @@ const AdminDashboard = () => {
 
                               <div style={{ marginTop: 'auto' }}>
                                     <div className="nav-divider"></div>
-                                    <button onClick={handleLogout} className="nav-item logout">
+                                    <button onClick={handleLogout} className="navb-item logout">
                                           <i className="bi bi-box-arrow-right"></i> Logout
                                     </button>
                               </div>
