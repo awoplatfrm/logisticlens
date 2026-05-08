@@ -281,32 +281,96 @@ export class ShipmentOperations extends Database {
         }
     }
 
+    async updateShipmentByTerminalId(terminal_shipment_id: string, update_query: any) {
+        try {
+            const result = await this.db.collection("shipments").updateOne(
+                { terminal_shipment_id: terminal_shipment_id },
+                update_query
+            );
+
+            if (result?.matchedCount === 0) {
+                return {
+                    code: 404,
+                    message: 'Shipment not found by terminal ID',
+                    data: null
+                };
+            }
+
+            return {
+                code: 200,
+                message: 'Status updated successfully via webhook',
+                data: null
+            };
+        } catch (error) {
+            console.log("Error updating shipment by terminal ID:", error);
+            return { code: 500, message: "Internal server error" };
+        }
+    }
+
 
     async deleteShipment(trackingNumber: string) {
 
         if (!trackingNumber) {
             return {
-                message: "customer id is required to delete user",
+                message: "Tracking number is required to delete shipment",
                 data: null,
                 code: 400
             }
         } else {
+            try {
+                const shipmentToDelete = await this.db.collection("shipments").findOne({ tracking_number: trackingNumber });
 
-
-            const response = await this.db.collection("shipments").deleteOne({ tracking_number: trackingNumber })
-            console.log("delete", response)
-            if (response.deletedCount > 0) {
-                return {
-                    message: "user deleted succcessfully",
-                    data: null,
-                    code: 200
+                if (!shipmentToDelete) {
+                    return {
+                        message: "Shipment not found",
+                        data: null,
+                        code: 404
+                    };
                 }
-            } else {
+
+                // If it's a Terminal Africa shipment, attempt to cancel it first
+                if (shipmentToDelete.terminal_shipment_id) {
+                    // Dynamically import TerminalService to avoid circular dependency
+                    const { TerminalService } = await import('../utils/terminal');
+                    console.log(`Attempting to cancel Terminal Africa shipment ID: ${shipmentToDelete.terminal_shipment_id}`);
+                    const cancelResult = await TerminalService.cancelShipment(shipmentToDelete.terminal_shipment_id);
+
+                    if (!cancelResult.success) {
+                        console.error(`Failed to cancel shipment with Terminal Africa: ${cancelResult.error}`);
+                        // Optionally, you could return an error here and prevent local deletion
+                        // return {
+                        //     message: `Failed to cancel shipment with Terminal Africa: ${cancelResult.error}`,
+                        //     data: null,
+                        //     code: 500
+                        // };
+                    } else {
+                        console.log(`Successfully cancelled shipment with Terminal Africa: ${shipmentToDelete.terminal_shipment_id}`);
+                    }
+                }
+
+
+                const response = await this.db.collection("shipments").deleteOne({ tracking_number: trackingNumber })
+                console.log("delete", response)
+                if (response.deletedCount > 0) {
+                    return {
+                        message: "user deleted succcessfully",
+                        data: null,
+                        code: 200
+                    }
+                } else {
+                    return {
+                        message: "could not delete user, something went wrong!",
+                        data: null,
+                        code: 500
+                    }
+                }
+            } catch (error) {
+                console.error("Error deleting shipment:", error);
                 return {
-                    message: "could not delete user, something went wrong!",
+                    message: `Error deleting shipment: ${error}`,
                     data: null,
                     code: 500
-                }
+                };
             }
         }
     }

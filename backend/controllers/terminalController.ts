@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
-import { TerminalService } from './utils/terminal';
-import { ShipmentOperations } from './auth/auth';
-import { sendTrackingEmail } from './utils/mailer';
-import { ShipmentFormData } from './types/auth.types';
+import { Request, Response, NextFunction, RequestHandler } from 'express'; // Import NextFunction and RequestHandler
+import { TerminalService } from '../utils/terminal';
+import { ShipmentOperations } from '../auth/auth';
+import { sendTrackingEmail } from '../utils/mailer';
+import { ShipmentFormData } from '../types/auth.types';
 
 const shipment_operations = new ShipmentOperations();
 
@@ -79,7 +79,7 @@ export const bookShipment = async (request: Request, response: Response) => {
         city: formatLocationName(quoteData.fromCity, ""),
         state: formatLocationName(quoteData.from_state, ""),
         country: quoteData.fromCountryCode,
-        zip: quoteData.fromPostalCode
+        zip: bookingData.sender_postal_code || quoteData.fromPostalCode || ""
     };
 
     const delivery = {
@@ -93,7 +93,7 @@ export const bookShipment = async (request: Request, response: Response) => {
         city: formatLocationName(quoteData.toCity, ""),
         state: formatLocationName(quoteData.to_state, ""),
         country: quoteData.toCountryCode,
-        zip: quoteData.toPostalCode
+        zip: bookingData.receiver_postal_code || quoteData.toPostalCode || ""
     };
 
     const parcel_details = {
@@ -164,7 +164,8 @@ export const bookShipment = async (request: Request, response: Response) => {
             order_status: [{ status: 'pending', date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString(), message: `Shipment booked with ${selectedRate.carrier_name}.`, location: `${pickup.city}, ${pickup.country}` }],
             current_status: 'pending',
             created_at: new Date(),
-            updated_at: new Date()
+            updated_at: new Date(),
+            terminal_metadata: terminalShipment // Capture all extra details from Terminal Africa
         };
 
         await shipment_operations.registerShipment(save_shipment);
@@ -182,6 +183,53 @@ export const bookShipment = async (request: Request, response: Response) => {
         });
     } catch (error: any) {
         console.error("Error in /api/book-shipment:", error);
+        response.status(500).send({ code: 500, message: error.message || "An unexpected error occurred.", data: null });
+    }
+};
+
+export const createTerminalWebhook: RequestHandler = async (request: Request, response: Response) => {
+    const { name } = request.body; // Only name is dynamic, others can be defaults or from env
+
+    const webhookUrl = process.env.TERMINAL_WEBHOOK_URL; // Get from environment variable
+    const defaultEvents = ["shipment.status_updated", "shipment.delivered", "shipment.created", "shipment.cancelled"];
+    const active = true; // Always create active webhook via this trigger
+
+    if (!webhookUrl) {
+        response.status(500).send({ code: 500, message: "TERMINAL_WEBHOOK_URL environment variable is not set.", data: null });
+        return;
+    }
+
+    // Determine if it's a live webhook based on the API key used
+    const isTestKey = (process.env.TERMINAL_AFRICA_SECRET_KEY || '').trim().startsWith('sk_test');
+    const live = !isTestKey; // If it's a test key, live is false. If it's a live key, live is true.
+
+    // Ensure webhookUrl is HTTPS for live webhooks
+    if (live && !webhookUrl.startsWith('https://')) {
+        response.status(400).send({ code: 400, message: "Live webhooks must use an HTTPS URL. Please ensure TERMINAL_WEBHOOK_URL is HTTPS.", data: null });
+        return;
+    }
+
+    try {
+        // Force a unique name to rule out conflicts, but use standard Terminal Africa event names
+        const uniqueName = `LL-Webhook-${Date.now()}`;
+        const validEvents = ["shipment.created", "shipment.updated", "shipment.delivered", "shipment.cancelled"];
+        const result = await TerminalService.createWebhook(uniqueName, webhookUrl, validEvents, active, live);
+
+        if (result.success) {
+            response.status(200).send({
+                code: 200,
+                message: "Webhook created successfully with Terminal Africa.",
+                data: result.data
+            });
+        } else {
+            response.status(400).send({
+                code: 400,
+                message: result.error || "Failed to create webhook with Terminal Africa.",
+                data: null
+            });
+        }
+    } catch (error: any) {
+        console.error("Error creating Terminal Africa webhook:", error);
         response.status(500).send({ code: 500, message: error.message || "An unexpected error occurred.", data: null });
     }
 };

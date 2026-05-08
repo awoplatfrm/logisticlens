@@ -9,7 +9,8 @@ import { Auth, ShipmentOperations } from './auth/auth'
 import { AuthenticateAdmin, RestrictDemoAdmin } from "./middleware/authAdmin";
 import { ShipmentFormData } from "./types/auth.types";
 import { sendTrackingEmail, sendDynamicEmail } from "./utils/mailer";
-import terminalRoutes from "./terminalRoutes";
+import webhookRoutes from "./routes/webhookRoutes";
+import terminalRoutes from "./routes/terminalRoutes";
 
 
 // Security Middlewares
@@ -30,6 +31,15 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
+
+// Webhook specific middleware:
+// We need the raw body for signature verification, so we apply express.raw()
+// ONLY to the webhook path. This must come BEFORE express.json() for that path.
+app.use('/api/webhooks', express.raw({ type: 'application/json' }), (req: Request, res: Response, next: NextFunction) => {
+    // If the body is a Buffer, try to parse it as JSON for easier logging/access later
+    if (req.body && Buffer.isBuffer(req.body)) req.body = JSON.parse(req.body.toString('utf8'));
+    next();
+});
 
 const PORT = 4000
 const auth = new Auth();
@@ -62,6 +72,9 @@ app.use("/api/admin/login", loginLimiter);
 
 // Terminal Africa Routes
 app.use("/api", terminalRoutes);
+
+// Webhook Routes
+app.use("/api/webhooks", webhookRoutes);
 
 // TEMPORARY SETUP ROUTE
 // app.get("/api/setup-demo", async (request: Request, response: Response) => {

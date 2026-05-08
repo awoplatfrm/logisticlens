@@ -30,4 +30,5 @@ export interface ShipmentFormData {
     terminal_shipment_id?: string; // New field for Terminal Africa's shipment ID
     terminal_waybill_url?: string; // New field for Terminal Africa's waybill URL
     terminal_rate_id?: string; // New field to store the rate ID used
+    terminal_webhook_id?: string; // New field to store the webhook ID if needed
 }

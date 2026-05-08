@@ -135,5 +135,39 @@ export const TerminalService = {
             const errorMessage = error.response?.data?.message || error.response?.data?.errors?.[0]?.message || error.message;
             return { success: false, error: errorMessage };
         }
+    },
+
+    // Phase 3: Cancel a Shipment with Terminal Africa
+    cancelShipment: async (terminalShipmentId: string) => {
+        try {
+            const response = await terminalApi.delete(`/shipments/${terminalShipmentId}`);
+            return { success: true, data: response.data };
+        } catch (error: any) {
+            console.error("Terminal Cancel Shipment Error:", JSON.stringify(error.response?.data || error.message, null, 2));
+            const errorMessage = error.response?.data?.message || error.response?.data?.errors?.[0]?.message || error.message;
+            return { success: false, error: errorMessage };
+        }
+    },
+
+    // Phase 3: Create a Webhook with Terminal Africa
+    createWebhook: async (name: string, url: string, events: string[], active: boolean, live: boolean) => {
+        try {
+            console.log("\n--- Attempting to Create Terminal Africa Webhook ---");
+            const webhookPayload = {
+                name,
+                url,
+                events,
+                active,
+                live
+            };
+            console.log("Webhook Payload being sent:", JSON.stringify(webhookPayload, null, 2));
+            const response = await terminalApi.post('/webhooks', webhookPayload);
+            console.log("Terminal Africa Webhook Creation Response:", JSON.stringify(response.data, null, 2));
+            return { success: true, data: response.data.data };
+        } catch (error: any) {
+            console.error("Terminal Create Webhook Error:", JSON.stringify(error.response?.data || error.message, null, 2));
+            const errorMessage = error.response?.data?.message || error.response?.data?.errors?.[0]?.message || error.message;
+            return { success: false, error: errorMessage };
+        }
     }
 };
