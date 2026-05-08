@@ -126,7 +126,7 @@ const AdminShipmentForm = () => {
         <div className="shipment-container">
             <button
                 onClick={() => navigate('/admin')}
-                style={{ padding: '10px 20px', background: '#ffffff', border: '1px solid #eef2f6', borderRadius: '8px', cursor: 'pointer', marginBottom: '20px', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#555', fontWeight: 600, boxShadow: '0 2px 4px rgba(0,0,0,0.05)', alignSelf: 'flex-start' }}
+                style={{ padding: '10px 20px', background: '#ffffff', border: '1px solid #DDE6ED', borderRadius: '8px', cursor: 'pointer', marginBottom: '20px', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#526D82', fontWeight: 600, boxShadow: '0 2px 4px rgba(0,0,0,0.05)', alignSelf: 'flex-start' }}
             >
                 &larr; Back to Dashboard
             </button>

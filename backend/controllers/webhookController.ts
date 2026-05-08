@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 import { ShipmentOperations } from '../auth/auth';
 
 const shipment_operations = new ShipmentOperations();
 
-export const handleTerminalWebhook = async (req: Request, res: Response) => {
+export const handleTerminalWebhook: RequestHandler = async (req: Request, res: Response) => {
     // The raw body is needed for signature verification, which we'll add later in this file.
     // However, the middleware in index.ts has already parsed the JSON body for us
     // and placed it back into req.body.
@@ -11,7 +11,8 @@ export const handleTerminalWebhook = async (req: Request, res: Response) => {
     const event: any = req.body;
 
     if (!event) {
-        return res.status(400).send({ received: false, message: "No event body received" });
+        res.status(400).send({ received: false, message: "No event body received" });
+        return;
     }
 
     console.log("\n=== RECEIVED TERMINAL AFRICA WEBHOOK ===");

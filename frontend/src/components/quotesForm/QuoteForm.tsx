@@ -22,14 +22,14 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ quoteData, setQuoteData, onSubmit
                     <h5 className="fw-bold mb-3 text-secondary"><i className="bi bi-geo-alt-fill me-2 text-danger"></i>Ship From</h5>
                     <div className="mb-3">
                         <label className="quote-label">Country</label>
-                        <select className="quote-select" value={quoteData.fromCountryCode} onChange={(e) => { setQuoteData({ ...quoteData, fromCountryCode: e.target.value, fromStateCode: '', fromCity: '', fromPostalCode: '' }); }} required>
+                        <select className="quote-select" value={quoteData.fromCountryCode} onChange={(e) => { setQuoteData({ ...quoteData, fromCountryCode: e.target.value, fromStateCode: '', fromCity: '' }); }} required>
                             <option value="">Select Origin Country</option>
                             {Country.getAllCountries().map(c => <option key={c.isoCode} value={c.isoCode}>{c.name}</option>)}
                         </select>
                     </div>
                     <div className="mb-3">
                         <label className="quote-label">State/Province</label>
-                        <select className="quote-select" value={quoteData.fromStateCode} onChange={(e) => { setQuoteData({ ...quoteData, fromStateCode: e.target.value, fromCity: '', fromPostalCode: '' }); }} required disabled={!quoteData.fromCountryCode || fromStates.length === 0}>
+                        <select className="quote-select" value={quoteData.fromStateCode} onChange={(e) => { setQuoteData({ ...quoteData, fromStateCode: e.target.value, fromCity: '' }); }} required disabled={!quoteData.fromCountryCode || fromStates.length === 0}>
                             <option value="">Select Origin State</option>
                             {fromStates.map(s => <option key={s.isoCode} value={s.isoCode}>{s.name}</option>)}
                         </select>
@@ -45,10 +45,6 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ quoteData, setQuoteData, onSubmit
                             <input type="text" className="quote-input" value={quoteData.fromCity} onChange={(e) => setQuoteData({ ...quoteData, fromCity: e.target.value })} placeholder="Enter City" required disabled={!quoteData.fromCountryCode} />
                         )}
                     </div>
-                    <div className="mb-3">
-                        <label className="quote-label">Postal Code / ZIP</label>
-                        <input type="text" className="quote-input" value={quoteData.fromPostalCode} onChange={(e) => setQuoteData({ ...quoteData, fromPostalCode: e.target.value })} placeholder="e.g. 100275" disabled={!quoteData.fromStateCode} />
-                    </div>
                 </div>
 
                 {/* Destination */}
@@ -56,14 +52,14 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ quoteData, setQuoteData, onSubmit
                     <h5 className="fw-bold mb-3 text-secondary"><i className="bi bi-geo-alt-fill me-2 text-primary"></i>Ship To</h5>
                     <div className="mb-3">
                         <label className="quote-label">Country</label>
-                        <select className="quote-select" value={quoteData.toCountryCode} onChange={(e) => { setQuoteData({ ...quoteData, toCountryCode: e.target.value, toStateCode: '', toCity: '', toPostalCode: '' }); }} required>
+                        <select className="quote-select" value={quoteData.toCountryCode} onChange={(e) => { setQuoteData({ ...quoteData, toCountryCode: e.target.value, toStateCode: '', toCity: '' }); }} required>
                             <option value="">Select Destination Country</option>
                             {Country.getAllCountries().map(c => <option key={c.isoCode} value={c.isoCode}>{c.name}</option>)}
                         </select>
                     </div>
                     <div className="mb-3">
                         <label className="quote-label">State/Province</label>
-                        <select className="quote-select" value={quoteData.toStateCode} onChange={(e) => { setQuoteData({ ...quoteData, toStateCode: e.target.value, toCity: '', toPostalCode: '' }); }} required disabled={!quoteData.toCountryCode || toStates.length === 0}>
+                        <select className="quote-select" value={quoteData.toStateCode} onChange={(e) => { setQuoteData({ ...quoteData, toStateCode: e.target.value, toCity: '' }); }} required disabled={!quoteData.toCountryCode || toStates.length === 0}>
                             <option value="">Select Destination State</option>
                             {toStates.map(s => <option key={s.isoCode} value={s.isoCode}>{s.name}</option>)}
                         </select>
@@ -78,10 +74,6 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ quoteData, setQuoteData, onSubmit
                         ) : (
                             <input type="text" className="quote-input" value={quoteData.toCity} onChange={(e) => setQuoteData({ ...quoteData, toCity: e.target.value })} placeholder="Enter City" required disabled={!quoteData.toCountryCode} />
                         )}
-                    </div>
-                    <div className="mb-3">
-                        <label className="quote-label">Postal Code / ZIP</label>
-                        <input type="text" className="quote-input" value={quoteData.toPostalCode} onChange={(e) => setQuoteData({ ...quoteData, toPostalCode: e.target.value })} placeholder="e.g. 90210" disabled={!quoteData.toStateCode} />
                     </div>
                 </div>
             </div>

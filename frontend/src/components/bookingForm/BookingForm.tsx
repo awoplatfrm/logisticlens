@@ -18,6 +18,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSubmit, onCancel, loading, 
         sender_alt_phone: '',
         sender_line1: '',
         sender_line2: '',
+        sender_postal_code: '',
         receiver_first_name: '',
         receiver_last_name: '',
         receiver_email: '',
@@ -25,6 +26,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSubmit, onCancel, loading, 
         receiver_alt_phone: '',
         receiver_line1: '',
         receiver_line2: '',
+        receiver_postal_code: '',
         parcel_description: '',
         parcel_value: ''
     });
@@ -74,6 +76,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSubmit, onCancel, loading, 
                             <div className="mb-3"><label className="quote-label">Alternative Phone (Optional)</label><input type="text" name="sender_alt_phone" className="quote-input" value={formData.sender_alt_phone} onChange={handleChange} /></div>
                             <div className="mb-3"><label className="quote-label">Address Line 1</label><input type="text" name="sender_line1" className="quote-input" value={formData.sender_line1} onChange={handleChange} required /></div>
                             <div className="mb-3"><label className="quote-label">Address Line 2 (Optional)</label><input type="text" name="sender_line2" className="quote-input" value={formData.sender_line2} onChange={handleChange} /></div>
+                            <div className="mb-3"><label className="quote-label">Postal / Zip Code</label><input type="text" name="sender_postal_code" className="quote-input" value={formData.sender_postal_code} onChange={handleChange} required /></div>
                         </div>
 
                         <div className="quote-form-section">
@@ -85,6 +88,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSubmit, onCancel, loading, 
                             <div className="mb-3"><label className="quote-label">Alternative Phone (Optional)</label><input type="text" name="receiver_alt_phone" className="quote-input" value={formData.receiver_alt_phone} onChange={handleChange} /></div>
                             <div className="mb-3"><label className="quote-label">Address Line 1</label><input type="text" name="receiver_line1" className="quote-input" value={formData.receiver_line1} onChange={handleChange} required /></div>
                             <div className="mb-3"><label className="quote-label">Address Line 2 (Optional)</label><input type="text" name="receiver_line2" className="quote-input" value={formData.receiver_line2} onChange={handleChange} /></div>
+                            <div className="mb-3"><label className="quote-label">Postal / Zip Code</label><input type="text" name="receiver_postal_code" className="quote-input" value={formData.receiver_postal_code} onChange={handleChange} required /></div>
                         </div>
                     </div>
                     <div className="text-center mt-5">

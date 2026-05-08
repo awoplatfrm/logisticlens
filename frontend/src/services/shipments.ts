@@ -13,6 +13,10 @@ export const shipments = {
     book_shipment: async (booking_data: any) => {
         return await api.post('/book-shipment', booking_data);
     },
+
+    createTerminalWebhook: async (name: string) => {
+        return await api.post('/admin/create-webhook', { name });
+    },
     register_shipment: async (shipment_data: ShipmentFormData) => {
         return await api.post('/admin/registerShipment', shipment_data)
     },

@@ -1,5 +1,23 @@
 /* Add to TrackingDetails.css */
 
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.live-indicator {
+    animation: pulse-green 2s infinite;
+}
+
 .tracking-result {
     margin-top: 30px;
 }
@@ -26,7 +44,7 @@
 
 .status-out {
     background: #ffc107;
-    color: #333;
+    color: #27374D;
 }
 
 .status-pending {
@@ -35,7 +53,7 @@
 }
 
 .status-default {
-    background: #667eea;
+    background: #769FCD;
     color: white;
 }
 
@@ -44,13 +62,13 @@
     align-items: center;
     gap: 10px;
     padding: 15px;
-    background: #f0f4ff;
+    background: #F7FBFC;
     border-radius: 8px;
     margin-bottom: 25px;
 }
 
 .tracking-number-display .label {
-    color: #666;
+    color: #526D82;
     font-size: 14px;
 }
 
@@ -58,7 +76,7 @@
     font-family: monospace;
     font-size: 20px;
     font-weight: 600;
-    color: #667eea;
+    color: #769FCD;
 }
 
 .copy-btn {
@@ -71,11 +89,11 @@
 }
 
 .copy-btn:hover {
-    background: #e0e7ff;
+    background: #DDE6ED;
 }
 
 .customer-info {
-    background: #f8f9fa;
+    background: #F7FBFC;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 25px;
@@ -86,14 +104,14 @@
 }
 
 .customer-info h3 {
-    color: #333;
+    color: #27374D;
     margin-bottom: 15px;
     font-size: 16px;
 }
 
 .customer-info p {
     margin: 5px 0;
-    color: #555;
+    color: #526D82;
 }
 
 .addresses-grid {
@@ -104,32 +122,32 @@
 }
 
 .address-box {
-    background: #f8f9fa;
+    background: #F7FBFC;
     padding: 20px;
     border-radius: 8px;
 }
 
 .address-box h4 {
-    color: #667eea;
+    color: #769FCD;
     margin-bottom: 15px;
     font-size: 16px;
 }
 
 .address-box p {
     margin: 5px 0;
-    color: #555;
+    color: #526D82;
     line-height: 1.5;
 }
 
 .package-details {
-    background: #f8f9fa;
+    background: #F7FBFC;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 25px;
 }
 
 .package-details h3 {
-    color: #333;
+    color: #27374D;
     margin-bottom: 20px;
     font-size: 16px;
 }
@@ -148,41 +166,41 @@
 
 .detail-label {
     font-size: 12px;
-    color: #666;
+    color: #526D82;
     text-transform: uppercase;
 }
 
 .detail-value {
     font-weight: 600;
-    color: #333;
+    color: #27374D;
 }
 
 .additional-info {
-    background: #f8f9fa;
+    background: #F7FBFC;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 25px;
 }
 
 .additional-info h3 {
-    color: #333;
+    color: #27374D;
     margin-bottom: 15px;
     font-size: 16px;
 }
 
 .additional-info p {
     margin: 8px 0;
-    color: #555;
+    color: #526D82;
 }
 
 .progress-tracker {
-    background: #f8f9fa;
+    background: #F7FBFC;
     padding: 20px;
     border-radius: 8px;
 }
 
 .progress-tracker h3 {
-    color: #333;
+    color: #27374D;
     margin-bottom: 20px;
     font-size: 16px;
 }
@@ -201,14 +219,14 @@
     top: 20px;
     bottom: -15px;
     width: 2px;
-    background: #e0e0e0;
+    background: #DDE6ED;
 }
 
 .step-dot {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #667eea;
+    background: #769FCD;
     z-index: 1;
 }
 
@@ -219,35 +237,35 @@
 .step-title {
     display: block;
     font-weight: 600;
-    color: #333;
+    color: #27374D;
     margin-bottom: 4px;
 }
 
 .step-date {
     display: block;
     font-size: 13px;
-    color: #666;
+    color: #526D82;
     margin-bottom: 2px;
 }
 
 .step-status {
     display: inline-block;
     font-size: 12px;
-    color: #667eea;
-    background: #e0e7ff;
+    color: #769FCD;
+    background: #DDE6ED;
     padding: 2px 8px;
     border-radius: 12px;
     text-transform: capitalize;
 }
 
 .no-tracking-info {
-    background: #f8f9fa;
+    background: #F7FBFC;
     padding: 40px;
     text-align: center;
     border-radius: 8px;
     margin: 20px 0;
-    color: #666;
-    border: 2px dashed #ddd;
+    color: #526D82;
+    border: 2px dashed #DDE6ED;
 }
 
 .no-tracking-info p {

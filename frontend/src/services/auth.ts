@@ -17,6 +17,7 @@ export const authenticate = {
     },
     userEmail: () => {
         const token = localStorage.getItem("token");
+        if (!token) return "";
         const decoded = jwtDecode(token as string) as any;
         return decoded.email as string;
     },

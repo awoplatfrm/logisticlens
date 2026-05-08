@@ -8,19 +8,19 @@
 
 .contact-info {
     width: 45%;
-    background: #f8faff;
+    background: #F7FBFC;
     padding: 50px;
-    border-right: 1px solid #eef2f6;
+    border-right: 1px solid #DDE6ED;
 }
 
 .contact-info h2 {
-    color: #333;
+    color: #27374D;
     margin-bottom: 15px;
     font-size: 2.5rem;
 }
 
 .contact-info>p {
-    color: #666;
+    color: #526D82;
     margin-bottom: 40px;
     line-height: 1.6;
     font-size: 1.1rem;
@@ -34,18 +34,18 @@
 
 .info-item i {
     font-size: 1.8rem;
-    color: #ef476f;
+    color: #769FCD;
 }
 
 .info-item h4 {
     margin: 0 0 5px 0;
     font-size: 1.1rem;
-    color: #333;
+    color: #27374D;
 }
 
 .info-item p {
     margin: 0;
-    color: #666;
+    color: #526D82;
 }
 
 .contact-form-container {
@@ -54,7 +54,7 @@
 }
 
 .contact-form-container h2 {
-    color: #333;
+    color: #27374D;
     margin-bottom: 30px;
     font-size: 2.5rem;
 }
@@ -68,7 +68,7 @@
 .contact-form input,
 .contact-form textarea {
     padding: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #DDE6ED;
     border-radius: 8px;
     font-size: 1rem;
     font-family: inherit;
@@ -78,18 +78,23 @@
 .contact-form input:focus,
 .contact-form textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #769FCD;
 }
 
 .btn-submit-contact {
     padding: 15px;
-    background: #ef476f;
+    background: #769FCD;
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-submit-contact:hover {
+    background: #526D82;
 }
 
 @media (max-width: 768px) {

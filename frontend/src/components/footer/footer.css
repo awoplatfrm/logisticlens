@@ -3,10 +3,11 @@
     height: auto;
     padding: 40px 120px;
     margin-top: 150px;
-    background-color: #D9D9D9;
+    background-color: #27374D;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    color: #F7FBFC;
 }
 
 .footerLogoContainer {
@@ -20,6 +21,7 @@
 .footerLogo {
     width: 60%;
     height: 60%;
+    background: none;
 }
 
 .footerContentContainer {
@@ -45,8 +47,9 @@
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    border-bottom: .1rem solid rgb(197, 196, 196);
-    padding-bottom: 10px
+    border-bottom: .1rem solid #526D82;
+    padding-bottom: 10px;
+    color: #F7FBFC;
 }
 
 .footerContent button {
@@ -57,9 +60,13 @@
     font-family: 'Times New Roman', Times, serif;
     cursor: pointer;
     font-weight: bold;
-
+    color: #9DB2BF;
+    transition: color 0.3s ease;
 }
 
+.footerContent button:hover {
+    color: #769FCD;
+}
 
 .footerContent button p {
     font-size: 1.1rem;
@@ -67,6 +74,7 @@
     font-family: 'Times New Roman', Times, serif;
     cursor: pointer;
     font-weight: bold;
+    color: inherit;
 }
 
 .footerFollowUsContent button {
@@ -87,7 +95,12 @@
     cursor: pointer;
     font-weight: bold;
     padding: 0px;
+    color: #9DB2BF;
+    transition: color 0.3s ease;
+}
 
+.footerFollowUsContent button:hover {
+    color: #769FCD;
 }
 
 .footerFollowUsContent button p {
@@ -97,6 +110,7 @@
     font-weight: bold;
     margin: 0px;
     padding: 0px;
+    color: inherit;
 }
 
 .footerFollowUsContent button .footerIcon {

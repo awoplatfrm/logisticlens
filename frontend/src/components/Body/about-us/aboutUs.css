@@ -44,7 +44,7 @@
     font-weight: bold;
     letter-spacing: 0.25px;
     line-height: 32px;
-    color: #ef476f;
+    color: #769FCD;
     margin-top: 30px;
 }
 
@@ -54,6 +54,7 @@
     font-weight: bold;
     letter-spacing: 0px;
     line-height: 45px;
+    color: #27374D;
 }
 
 .aboutUsTextContainer p {
@@ -62,6 +63,7 @@
     font-weight: 400;
     text-wrap: wrap;
     overflow-wrap: break-word;
+    color: #526D82;
 }
 
 .aboutUsTextContainer button {
@@ -73,8 +75,14 @@
     padding: 8px 15px;
     background: none;
     border-radius: 15px;
-    border-color: #ef476f;
-    color: #ef476f;
+    border: 1px solid #769FCD;
+    color: #769FCD;
+    transition: all 0.3s ease;
+}
+
+.aboutUsTextContainer button:hover {
+    background-color: #769FCD;
+    color: #fff;
 }
 
 .aboutUsFiguresContainer {
@@ -103,7 +111,7 @@
     font-weight: bold;
     letter-spacing: -0.25px;
     line-height: 64px;
-    color: #ef476f;
+    color: #cd8576;
     text-align: center;
 }
 
@@ -113,12 +121,12 @@
     font-weight: 400;
     letter-spacing: 0.25px;
     line-height: 24px;
-    color: black;
+    color: #526D82;
     text-align: center;
 }
 
 .aboutUsFigure:nth-child(-n+2) {
-    border-right: .2px solid black;
+    border-right: .2px solid #DDE6ED;
 }
 
 /* Mobile Responsive */
@@ -154,6 +162,6 @@
 
     .aboutUsFigure:nth-child(-n+2) {
         border-right: none;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid #DDE6ED;
     }
 }

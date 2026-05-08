@@ -1,6 +1,7 @@
 import Navbar from "../navbar/navbar";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import './header.css'
 function Header() {
 
@@ -23,8 +24,10 @@ function Header() {
                     <div className="headerBodyText">
                         <h1 className="headerText">Welcome to LogisticLens.</h1>
                         <p className="headerParagraphText">Your Trusted Partner in Logistics Solutions</p>
-                        {/* <Link to={'/get-quote'} style={{ display: 'inline-block', marginTop: '10px', padding: '15px 30px', backgroundColor: '#ef476f', color: '#fff', textDecoration: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '16px' }}>Get Quote</Link> */}
-                        <button disabled style={{ display: 'inline-block', marginTop: '10px', padding: '15px 30px', backgroundColor: '#ef476f', color: '#fff', textDecoration: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '16px', opacity: 0.6, cursor: 'not-allowed', border: 'none' }}>Get Quote</button>
+
+
+                        <Link to={'/'} className="get-quote-btn" >Get Quote</Link>
+
                     </div>
                     <div className="trackShipmentContainer">
                         <form className="trackShipmentForm" onSubmit={handleTrack}>

@@ -14,6 +14,15 @@ interface ExtendedTrackingProps extends Omit<TrackingDetailsProps, 'shipment'> {
 
 const TrackingResult: React.FC<ExtendedTrackingProps> = ({ shipment }) => {
 
+    // Get specific transport icon based on service type
+    const getServiceIcon = (type?: string) => {
+        const serviceType = type?.toLowerCase() || '';
+        if (serviceType.includes('air') || serviceType.includes('express')) return <i className="bi bi-airplane-fill" style={{ fontSize: '14px', transform: 'rotate(135deg)', display: 'inline-block' }}></i>;
+        if (serviceType.includes('sea') || serviceType.includes('ocean')) return <span style={{ fontSize: '14px', lineHeight: 1, transform: 'rotate(-90deg)', display: 'inline-block' }}>🚢</span>;
+        if (serviceType.includes('road')) return <i className="bi bi-bus-front-fill" style={{ fontSize: '14px' }}></i>;
+        return <i className="bi bi-truck" style={{ fontSize: '14px', transform: 'rotate(90deg)', display: 'inline-block' }}></i>;
+    };
+
     // Format service type for display
     const formatServiceType = (type?: string) => {
         if (!type) return 'Standard';
@@ -32,31 +41,33 @@ const TrackingResult: React.FC<ExtendedTrackingProps> = ({ shipment }) => {
         <>
             {/* Header Card: Status & Tracking Number */}
             <div className="card shadow-sm border-0 mb-4 rounded-4 overflow-hidden">
-                <div className="card-header text-white p-4 p-md-5 d-flex flex-column flex-md-row justify-content-between align-items-md-center border-0" style={{ background: isDelivered ? 'linear-gradient(135deg, #10B981 0%, #059669 100%)' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-                    <div className="mb-4 mb-md-0">
-                        <h6 className="mb-1 text-white text-opacity-75 text-uppercase fw-bold tracking-widest" style={{ letterSpacing: '2px' }}>Tracking Number</h6>
-                        <h2 className="mb-0 text-white fw-bolder d-flex align-items-center gap-3" style={{ fontSize: '2.5rem' }}>
-                            {shipment.tracking_number}
-                            <button className="btn btn-sm btn-light bg-opacity-25 border-0 text-white rounded-circle d-flex align-items-center justify-content-center p-2" onClick={() => navigator.clipboard.writeText(shipment.tracking_number)} title="Copy" style={{ width: '35px', height: '35px' }}>
-                                <i className="bi bi-clipboard fs-5"></i>
+                <div className="card-header bg-white p-3 p-md-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center" style={{ borderBottom: '1px solid #DDE6ED' }}>
+                    <div className="mb-3 mb-md-0">
+                        <span className="text-muted text-uppercase fw-bold" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Tracking Number</span>
+                        <div className="d-flex align-items-center gap-2 mt-1">
+                            <h3 className="mb-0 fw-bolder" style={{ color: '#27374D', fontSize: '1.5rem' }}>
+                                {shipment.tracking_number}
+                            </h3>
+                            <button className="btn btn-sm rounded-circle d-flex align-items-center justify-content-center" onClick={() => navigator.clipboard.writeText(shipment.tracking_number)} title="Copy" style={{ width: '32px', height: '32px', backgroundColor: '#F7FBFC', color: '#526D82', border: '1px solid #DDE6ED' }}>
+                                <i className="bi bi-clipboard" style={{ fontSize: '1rem' }}></i>
                             </button>
-                        </h2>
+                        </div>
                     </div>
                     <div className="text-md-end text-start">
-                        <h6 className="mb-1 text-white text-opacity-75 text-uppercase fw-bold" style={{ letterSpacing: '2px' }}>Current Status</h6>
-                        <h3 className="mb-0 text-white fw-bold text-capitalize d-flex align-items-center justify-content-md-end gap-2">
+                        <span className="text-muted text-uppercase fw-bold" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>Current Status</span>
+                        <h4 className="mb-0 fw-bold text-capitalize d-flex align-items-center justify-content-md-end gap-2 mt-1" style={{ color: isDelivered ? '#10B981' : '#769FCD', fontSize: '1.25rem' }}>
                             {isDelivered && <i className="bi bi-check-circle-fill"></i>}
                             {shipment.current_status?.replace('_', ' ') || 'Pending'}
-                        </h3>
+                        </h4>
                     </div>
                 </div>
 
                 {/* Customer Alert Banner */}
                 {shipment.alert && (
                     <div className="alert d-flex align-items-center rounded-0 border-0 m-0 px-4 py-3" style={{
-                        background: shipment.alert.type === 'delay' ? '#fee2e2' : shipment.alert.type === 'warning' ? '#fef3c7' : shipment.alert.type === 'success' ? '#d1fae5' : '#e0e7ff',
-                        color: shipment.alert.type === 'delay' ? '#991b1b' : shipment.alert.type === 'warning' ? '#92400e' : shipment.alert.type === 'success' ? '#065f46' : '#3730a3',
-                        borderLeft: `6px solid ${shipment.alert.type === 'delay' ? '#ef4444' : shipment.alert.type === 'warning' ? '#f59e0b' : shipment.alert.type === 'success' ? '#10b981' : '#667eea'} !important`
+                        background: shipment.alert.type === 'delay' ? '#fee2e2' : shipment.alert.type === 'warning' ? '#fef3c7' : shipment.alert.type === 'success' ? '#d1fae5' : '#DDE6ED',
+                        color: shipment.alert.type === 'delay' ? '#991b1b' : shipment.alert.type === 'warning' ? '#92400e' : shipment.alert.type === 'success' ? '#065f46' : '#27374D',
+                        borderLeft: `6px solid ${shipment.alert.type === 'delay' ? '#ef4444' : shipment.alert.type === 'warning' ? '#f59e0b' : shipment.alert.type === 'success' ? '#10b981' : '#769FCD'} !important`
                     }}>
                         <div className="fs-3 me-3">
                             {shipment.alert.type === 'info' && <i className="bi bi-info-circle-fill"></i>}
@@ -92,7 +103,7 @@ const TrackingResult: React.FC<ExtendedTrackingProps> = ({ shipment }) => {
 
                         <div className="d-flex flex-column align-items-center w-100 px-4 position-relative d-none d-md-flex">
                             <i className={`bi ${isDelivered ? 'bi-house-door-fill text-success' : 'bi-truck text-primary'} fs-1 mb-2 bg-white px-3`} style={{ zIndex: 2 }}></i>
-                            <div style={{ position: 'absolute', top: '25px', height: '3px', width: '100%', background: isDelivered ? '#10B981' : 'linear-gradient(90deg, #e9ecef 0%, #667eea 50%, #e9ecef 100%)', zIndex: 1 }}></div>
+                            <div style={{ position: 'absolute', top: '25px', height: '3px', width: '100%', background: isDelivered ? '#10B981' : 'linear-gradient(90deg, #DDE6ED 0%, #769FCD 50%, #DDE6ED 100%)', zIndex: 1 }}></div>
                         </div>
 
                         <div className="d-flex flex-column align-items-center w-100 py-3 position-relative d-md-none">
@@ -137,7 +148,7 @@ const TrackingResult: React.FC<ExtendedTrackingProps> = ({ shipment }) => {
                                 )}
                                 <li className="list-group-item d-flex justify-content-between align-items-center px-0 py-3 border-0">
                                     <span className="text-muted">Service Type</span>
-                                    <span className="badge bg-primary text-white px-3 py-2 text-capitalize">{formatServiceType(shipment.service_type)}</span>
+                                    <span className="badge text-white px-3 py-2 text-capitalize" style={{ backgroundColor: "#363c43" }}>{formatServiceType(shipment.service_type)}</span>
                                 </li>
                             </ul>
                         </div>
@@ -192,28 +203,48 @@ const TrackingResult: React.FC<ExtendedTrackingProps> = ({ shipment }) => {
                                     const isLatest = index === shipment.order_status.length - 1;
                                     return (
                                         <div key={index} className="mb-4" style={{ position: 'relative', paddingLeft: '35px' }}>
-                                            {/* Timeline Dot */}
-                                            <div style={{
-                                                position: 'absolute',
-                                                left: '-11.5px',
-                                                top: '5px',
-                                                width: '20px',
-                                                height: '20px',
-                                                borderRadius: '50%',
-                                                backgroundColor: isLatest ? '#667eea' : '#ced4da',
-                                                border: '4px solid #fff',
-                                                boxShadow: '0 0 0 1px rgba(0,0,0,0.1)'
-                                            }}></div>
+                                            {/* Timeline Dot or Icon */}
+                                            {isLatest && !isDelivered ? (
+                                                <div className="live-indicator" style={{
+                                                    position: 'absolute',
+                                                    left: '-15.5px',
+                                                    top: '1px',
+                                                    width: '28px',
+                                                    height: '28px',
+                                                    borderRadius: '50%',
+                                                    backgroundColor: '#10B981',
+                                                    color: '#fff',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    zIndex: 2
+                                                }}>
+                                                    {getServiceIcon(shipment.service_type)}
+                                                </div>
+                                            ) : (
+                                                <div style={{
+                                                    position: 'absolute',
+                                                    left: '-11.5px',
+                                                    top: '5px',
+                                                    width: '20px',
+                                                    height: '20px',
+                                                    borderRadius: '50%',
+                                                    backgroundColor: isLatest ? '#10B981' : '#DDE6ED',
+                                                    border: '4px solid #fff',
+                                                    boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
+                                                    zIndex: 2
+                                                }}></div>
+                                            )}
 
-                                            <div className={`p-3 p-md-4 rounded-4 ${isLatest ? 'border' : 'bg-light border border-light'}`} style={{ backgroundColor: isLatest ? '#f0f4ff' : '', borderColor: isLatest ? '#c7d2fe !important' : '' }}>
+                                            <div className={`p-3 p-md-4 rounded-4 ${isLatest ? 'border' : 'bg-light border border-light'}`} style={{ backgroundColor: isLatest ? '#F7FBFC' : '', borderColor: isLatest ? '#DDE6ED !important' : '' }}>
                                                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-2">
-                                                    <strong className="text-capitalize fs-5 mb-2 mb-md-0" style={{ color: isLatest ? '#3730a3' : '#495057' }}>
+                                                    <strong className="text-capitalize fs-5 mb-2 mb-md-0" style={{ color: isLatest ? '#27374D' : '#526D82' }}>
                                                         {status.status?.replace('_', ' ')}
                                                     </strong>
                                                     <span className="text-muted small fw-medium bg-white px-3 py-1 rounded-pill border"><i className="bi bi-calendar-event me-2"></i>{status.date} &bull; {status.time}</span>
                                                 </div>
-                                                {status.message && <p className="mb-2 mt-2" style={{ color: isLatest ? '#4f46e5' : '#6c757d', fontSize: '15px' }}>{status.message}</p>}
-                                                {status.location && <p className="mb-0 fw-bold" style={{ color: isLatest ? '#4338ca' : '#adb5bd', fontSize: '14px' }}><i className="bi bi-geo-alt-fill me-1"></i>{status.location}</p>}
+                                                {status.message && <p className="mb-2 mt-2" style={{ color: isLatest ? '#526D82' : '#9DB2BF', fontSize: '15px' }}>{status.message}</p>}
+                                                {status.location && <p className="mb-0 fw-bold" style={{ color: isLatest ? '#769FCD' : '#9DB2BF', fontSize: '14px' }}><i className="bi bi-geo-alt-fill me-1"></i>{status.location}</p>}
                                             </div>
                                         </div>
                                     )

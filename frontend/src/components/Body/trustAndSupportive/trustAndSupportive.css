@@ -3,7 +3,7 @@
     height: 380px;
     position: relative;
     flex-direction: column;
-    background-color: rgba(58, 90, 64, 0.8);
+    background-color: #526D82;
     padding: 0 120px;
 }
 
@@ -13,14 +13,15 @@
     width: 50%;
     height: 380px;
     margin: auto;
-    padding: 20px;
+    padding: 40px;
     position: absolute;
-    background-color: #D9D9D9;
+    background-color: #F7FBFC;
     top: 90px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
-    width: 50%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .trustAndSuppotive h1 {
@@ -30,6 +31,7 @@
     text-align: center;
     letter-spacing: -0.25px;
     line-height: 62px;
+    color: #27374D;
 }
 
 .trustAndSuppotive p {
@@ -43,6 +45,7 @@
     overflow-wrap: break-word;
     width: 350px;
     margin: auto;
+    color: #526D82;
 }
 
 /* Mobile Responsive */
@@ -63,6 +66,7 @@
         transform: translateX(-50%);
         z-index: 2;
         height: auto;
+        border-radius: 12px;
 
     }
 

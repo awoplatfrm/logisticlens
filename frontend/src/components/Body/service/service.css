@@ -15,6 +15,7 @@
     font-family: 'Times New Roman', Times, serif;
     display: flex;
     text-wrap: wrap;
+    color: #27374D;
 
 }
 
@@ -24,6 +25,7 @@
     font-family: 'Times New Roman', Times, serif;
     display: flex;
     text-wrap: wrap;
+    color: #526D82;
 }
 
 .serviceCardsContainer {

@@ -70,7 +70,7 @@
 .trackShipmentContainer button {
     width: 20%;
     height: 60px;
-    background-color: #ef476f;
+    background-color: #769FCD;
     border: none;
     border-radius: 0px 5px 5px 0px;
     color: #ffff;
@@ -80,7 +80,30 @@
     cursor: pointer;
     text-align: center;
     text-wrap: wrap;
+    transition: background-color 0.3s ease;
 }
+
+.trackShipmentContainer button:hover {
+    background-color: #526D82;
+}
+
+.get-quote-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 15px 30px;
+    background-color: #769FCD;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ffff;
+}
+
+.get-quote-btn:hover {
+    background-color: #526D82;
+}
+
+
 
 .headerBodyText h1 {
     font-family: 'Times New Roman', Times, serif;
@@ -103,7 +126,7 @@
 .headerBodyText button {
     width: 150px;
     height: 50px;
-    background-color: #ef476f;
+    background-color: #769FCD;
     border: none;
     border-radius: 8px;
     color: #ffff;
@@ -111,6 +134,11 @@
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.headerBodyText button:hover {
+    background-color: #526D82;
 }
 
 /* Mobile Responsive */

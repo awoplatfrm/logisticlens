@@ -38,7 +38,7 @@ const Contact = () => {
                                 <p>support@logisticlens.online</p>
                             </div>
                         </div>
-                        <img src="https://placehold.co/800x400/f8faff/667eea?text=Location+Map+Image" alt="Map" style={{ width: '100%', borderRadius: '8px', marginTop: '20px', height: '200px', objectFit: 'cover' }} />
+                        <img src="https://placehold.co/800x400/F7FBFC/769FCD?text=Location+Map+Image" alt="Map" style={{ width: '100%', borderRadius: '8px', marginTop: '20px', height: '200px', objectFit: 'cover' }} />
                     </div>
 
                     <div className="contact-form-container">

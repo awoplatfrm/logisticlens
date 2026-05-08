@@ -2,10 +2,9 @@
 
 .tracking-page {
     min-height: 100vh;
-    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 50%); */
-    background-color: #333;
+    background-color: #F7FBFC;
     padding: 60px 20px;
-    color: #fff;
+    color: #27374D;
 }
 
 .tracking-container {
@@ -19,14 +18,14 @@
 
 .tracking-container h1 {
     text-align: center;
-    color: #333;
+    color: #27374D;
     font-size: 32px;
     margin-bottom: 10px;
 }
 
 .subtitle {
     text-align: center;
-    color: #666;
+    color: #526D82;
     margin-bottom: 30px;
 }
 
@@ -39,7 +38,7 @@
 .tracking-input {
     flex: 1;
     padding: 15px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid #DDE6ED;
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s;
@@ -47,12 +46,12 @@
 
 .tracking-input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #769FCD;
 }
 
 .tracking-button {
     padding: 15px 30px;
-    background: #667eea;
+    background: #769FCD;
     color: white;
     border: none;
     border-radius: 8px;
@@ -63,11 +62,11 @@
 }
 
 .tracking-button:hover {
-    background: #5a67d8;
+    background: #526D82;
 }
 
 .tracking-result {
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid #DDE6ED;
     padding-top: 30px;
 }
 
@@ -75,7 +74,7 @@
     display: inline-block;
     padding: 8px 20px;
     background: #ffc107;
-    color: #333;
+    color: #27374D;
     border-radius: 30px;
     font-weight: 600;
     font-size: 14px;
@@ -85,10 +84,10 @@
 .tracking-number-display {
     font-family: monospace;
     font-size: 18px;
-    color: #667eea;
+    color: #769FCD;
     margin-bottom: 30px;
     padding: 10px;
-    background: #f0f4ff;
+    background: #F7FBFC;
     border-radius: 6px;
     text-align: center;
 }
@@ -112,7 +111,7 @@
     top: 20px;
     bottom: -15px;
     width: 2px;
-    background: #e0e0e0;
+    background: #DDE6ED;
 }
 
 .progress-step.completed:not(:last-child)::before {
@@ -123,7 +122,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #e0e0e0;
+    background: #DDE6ED;
     z-index: 1;
 }
 
@@ -132,22 +131,22 @@
 }
 
 .active .step-dot {
-    background: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+    background: #769FCD;
+    box-shadow: 0 0 0 3px rgba(118, 159, 205, 0.3);
     animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+        box-shadow: 0 0 0 0 rgba(118, 159, 205, 0.7);
     }
 
     70% {
-        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+        box-shadow: 0 0 0 10px rgba(118, 159, 205, 0);
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+        box-shadow: 0 0 0 0 rgba(118, 159, 205, 0);
     }
 }
 
@@ -158,37 +157,37 @@
 .step-title {
     display: block;
     font-weight: 600;
-    color: #333;
+    color: #27374D;
 }
 
 .step-date,
 .step-location,
 .step-estimate {
     font-size: 14px;
-    color: #666;
+    color: #526D82;
 }
 
 .step-location {
-    color: #999;
+    color: #9DB2BF;
     margin-top: 2px;
 }
 
 .step-estimate {
-    color: #667eea;
+    color: #769FCD;
 }
 
 .shipment-details,
 .tracking-history {
     margin-top: 30px;
     padding: 20px;
-    background: #f8f9fa;
+    background: #F7FBFC;
     border-radius: 8px;
 }
 
 .shipment-details h3,
 .tracking-history h3 {
     margin-bottom: 15px;
-    color: #333;
+    color: #27374D;
     font-size: 18px;
 }
 
@@ -206,14 +205,14 @@
 
 .detail-label {
     font-size: 12px;
-    color: #666;
+    color: #526D82;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .detail-value {
     font-weight: 600;
-    color: #333;
+    color: #27374D;
 }
 
 .history-list {
@@ -226,22 +225,22 @@
     display: flex;
     gap: 15px;
     padding: 10px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #DDE6ED;
     font-size: 14px;
 }
 
 .history-time {
     min-width: 80px;
-    color: #666;
+    color: #526D82;
 }
 
 .history-desc {
     flex: 1;
-    color: #333;
+    color: #27374D;
 }
 
 .history-location {
-    color: #999;
+    color: #9DB2BF;
 }
 
 @media (max-width: 600px) {

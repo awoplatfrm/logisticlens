@@ -1,11 +1,25 @@
+.quote-select,
+.quote-input {
+    font-size: 16px !important;
+    /* Larger text prevents mobile zoom */
+    padding: 12px 15px !important;
+}
+
+.quote-select option {
+    font-size: 16px;
+    padding: 10px;
+}
+
+/* existing getQuote styles */
+
 .quote-page-wrapper {
-    background-color: #f4f7f6;
+    background-color: #F7FBFC;
     min-height: 100vh;
     padding-bottom: 50px;
 }
 
 .quote-page-header {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+    background: linear-gradient(135deg, #27374D 0%, #526D82 100%);
     padding-bottom: 30px;
 }
 
@@ -56,7 +70,7 @@
     font-size: 1.5rem;
     /* Larger heading */
     margin-bottom: 25px;
-    color: #333;
+    color: #27374D;
     display: flex;
     align-items: center;
 }
@@ -71,7 +85,7 @@
     font-size: 0.95rem;
     /* Slightly larger label */
     font-weight: 600;
-    color: #555;
+    color: #526D82;
     margin-bottom: 8px;
 }
 
@@ -85,16 +99,16 @@
     /* More rounded */
     font-size: 1.1rem;
     /* Larger font size for inputs */
-    color: #333;
-    background-color: #fcfcfc;
+    color: #27374D;
+    background-color: #ffffff;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .quote-input:focus,
 .quote-select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    border-color: #769FCD;
+    box-shadow: 0 0 0 3px rgba(118, 159, 205, 0.2);
 }
 
 .quote-select {
@@ -111,7 +125,7 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     overflow: hidden;
-    background-color: #fcfcfc;
+    background-color: #ffffff;
 }
 
 .quote-input-group .quote-input {
@@ -123,19 +137,19 @@
 
 .quote-input-group .quote-input-addon {
     padding: 14px 18px;
-    background-color: #eef2f6;
-    color: #666;
+    background-color: #DDE6ED;
+    color: #27374D;
     font-weight: 600;
     font-size: 1.1rem;
     border-left: 1px solid #e0e0e0;
 }
 
 .quote-submit-button {
-    padding: 16px 40px;
+    padding: 16px 25px;
     /* Larger button */
     font-size: 1.2rem;
     /* Larger font */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #769FCD;
     color: white;
     border: none;
     border-radius: 50px;
@@ -143,12 +157,12 @@
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 5px 15px rgba(118, 159, 205, 0.3);
 }
 
 .quote-submit-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+
 }
 
 .quote-rates-display {
@@ -158,7 +172,7 @@
 
 .quote-rates-display h3 {
     font-size: 2rem;
-    color: #333;
+    color: #27374D;
     margin-bottom: 30px;
     font-family: 'Times New Roman', Times, serif;
 }
@@ -180,7 +194,7 @@
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    border-left: 5px solid #10B981;
+    border-left: 5px solid #769FCD;
     /* Accent border */
     padding: 25px;
     display: flex;
@@ -193,7 +207,7 @@
 .quote-rate-card-info h5 {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #333;
+    color: #27374D;
     margin-bottom: 5px;
     word-break: break-word;
     hyphens: auto;
@@ -204,8 +218,8 @@
     display: inline-block;
     padding: 6px 12px;
     border-radius: 20px;
-    background-color: #eef2f6;
-    color: #666;
+    background-color: #DDE6ED;
+    color: #526D82;
     font-size: 0.85rem;
     font-weight: 500;
     white-space: normal;
@@ -230,7 +244,7 @@
 .quote-rate-card-price .currency {
     font-size: 0.75rem;
     /* Reduced font size */
-    color: #888;
+    color: #9DB2BF;
     font-weight: 600;
     display: block;
 }
@@ -238,13 +252,13 @@
 .quote-rate-card-price h3 {
     font-size: 1.8rem;
     font-weight: bolder;
-    color: #10B981;
+    color: #769FCD;
     margin: 5px 0;
 }
 
 .quote-book-button {
     padding: 10px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #769FCD;
     color: white;
     border: none;
     border-radius: 30px;
@@ -256,15 +270,15 @@
 
 .quote-book-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 3px 10px rgba(118, 159, 205, 0.3);
 }
 
 .quote-recalculate-button {
     padding: 12px 30px;
     font-size: 1rem;
-    background: #f0f4ff;
-    color: #667eea;
-    border: 1px solid #667eea;
+    background: #F7FBFC;
+    color: #526D82;
+    border: 1px solid #526D82;
     border-radius: 50px;
     font-weight: bold;
     cursor: pointer;
@@ -273,7 +287,7 @@
 }
 
 .quote-recalculate-button:hover {
-    background: #e0e7ff;
+    background: #DDE6ED;
 }
 
 /* Responsive adjustments */

@@ -4,7 +4,11 @@ import Navbar from '../../components/navbar/navbar';
 import Footer from '../../components/footer/footer';
 import AboutUs from '../../components/Body/about-us/aboutUs';
 import TrustAndSupportive from '../../components/Body/trustAndSupportive/trustAndSupportive';
-import '../services/services.css'; // Reusing shared page styles
+import '../services/services.css';
+import visionImage from "../../assets/images/body/aboutUs/our vission.webp"
+import missionImage from "../../assets/images/body/aboutUs/our mision.jpeg"
+
+
 
 const About = () => {
     useEffect(() => {
@@ -26,17 +30,17 @@ const About = () => {
 
                 <div className="page-content" style={{ marginTop: '40px' }}>
                     <div className="service-detail-card">
-                        <img src="https://placehold.co/600x400/f8faff/667eea?text=Our+Mission" alt="Our Mission" />
+                        <img src={missionImage} alt="Our Mission" />
                         <div className="service-detail-text">
                             <h2 style={{ fontFamily: "'Times New Roman', Times, serif", fontSize: '2.5rem' }}>Our Mission</h2>
-                            <p style={{ fontSize: '1.1rem', color: '#555', lineHeight: '1.8' }}>To provide innovative, reliable, and scalable logistics solutions that empower businesses to reach their global potential without borders or limitations.</p>
+                            <p style={{ fontSize: '1.1rem', color: '#526D82', lineHeight: '1.8' }}>To provide innovative, reliable, and scalable logistics solutions that empower businesses to reach their global potential without borders or limitations.</p>
                         </div>
                     </div>
                     <div className="service-detail-card reverse">
-                        <img src="https://placehold.co/600x400/f8faff/667eea?text=Our+Vision" alt="Our Vision" />
+                        <img src={visionImage} alt="Our Vision" />
                         <div className="service-detail-text">
                             <h2 style={{ fontFamily: "'Times New Roman', Times, serif", fontSize: '2.5rem' }}>Our Vision</h2>
-                            <p style={{ fontSize: '1.1rem', color: '#555', lineHeight: '1.8' }}>To be the world's most trusted logistics partner, setting the industry standard for speed, security, and customer-centric technology.</p>
+                            <p style={{ fontSize: '1.1rem', color: '#526D82', lineHeight: '1.8' }}>To be the world's most trusted logistics partner, setting the industry standard for speed, security, and customer-centric technology.</p>
                         </div>
                     </div>
                 </div>
